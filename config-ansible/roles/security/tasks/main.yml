@@ -66,3 +66,9 @@
 - name: Enable UFW
   ufw:
     state: enabled
+
+- name: Unlock admin user account
+  command: usermod -U "{{ admin_username }}"
+  become: true
+
+
