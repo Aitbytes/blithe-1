@@ -8,6 +8,7 @@
       - curl
       - software-properties-common
       - gnupg
+      - python3-pip  
     state: present
     update_cache: yes
 
@@ -30,8 +31,11 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - python3-docker 
+      - docker-compose-plugin
     state: present
     update_cache: yes
+
 
 # Configure Docker daemon
 - name: Create Docker daemon config directory
