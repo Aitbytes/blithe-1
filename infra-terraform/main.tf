@@ -58,7 +58,7 @@ variable "node_count" {
 
 variable "node_prefix" {
   type        = string
-  default     = "my-server"
+  default     = "blithe"
   description = "Prefix for the node names"
 }
 
