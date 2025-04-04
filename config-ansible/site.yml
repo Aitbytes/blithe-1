@@ -19,14 +19,14 @@
     - role: docker
       tags: ['docker']
 
-# Third play: SSH keys audit
-- name: SSH keys audit
+# Third play : Install pangolin and portainer on the machine
+- name: Install and configure Pangolin
   hosts: all
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
   roles:
-    - role: ssh_audit
-      tags: ['ssh_audit', 'security']
+    - role: pangolin
+      tags: ['pangolin']
 
 
