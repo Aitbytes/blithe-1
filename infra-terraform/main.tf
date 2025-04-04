@@ -105,6 +105,9 @@ resource "hcloud_server" "nodes" {
   backups           = false
   delete_protection = false
   ssh_keys          = [hcloud_ssh_key.main.id]
+  lifecycle {
+    create_before_destroy = false
+  }
   
   user_data = <<-EOF
     #cloud-config
