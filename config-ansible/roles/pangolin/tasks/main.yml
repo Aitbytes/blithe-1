@@ -29,25 +29,6 @@
     # - logs
     - traefik
 
-# - name: Create empty SQLite database file
-#   file:
-#     path: "{{ docker_base_dir }}/config/pangolin/db/db.sqlite"
-#     state: touch
-#     mode: '0644'
-#     owner: "995"
-#     group: "995"
-#
-# - name: Initialize SQLite database
-#   community.docker.docker_container:
-#     name: pangolin-db-init
-#     image: "alpine/sqlite:latest"
-#     working_dir: /data/db
-#     command: db.sqlite ".databases"
-#     volumes:
-#       - "{{ docker_base_dir }}/config/pangolin/db:/data"
-#     detach: false
-#     cleanup: true
-#   become: true
 
 - name: Create empty ACME JSON file
   file:
@@ -56,14 +37,6 @@
     mode: '0600'  # Required permission for acme.json
     owner: "995"
     group: "995"
-
-# - name: Create empty key file
-#   file:
-#     path: "{{ docker_base_dir }}/config/pangolin/key"
-#     state: touch
-#     mode: '0600'  # Secure permissions for key file
-#     owner: "995"
-#     group: "995"
 
 - name: Copy Pangolin configuration files
   template:
