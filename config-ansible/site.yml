@@ -1,0 +1,32 @@
+---
+# First play: Setup admin user (runs as root)
+- name: Initial setup
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: "{{ hostvars[inventory_hostname]['ansible_user'] | default('root') }}"
+  roles:
+    - role: security
+      tags: ['security', 'initial_setup']
+
+# Second play: Configure system (runs as admin)
+- name: System configuration
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: docker
+      tags: ['docker']
+
+# Third play: SSH keys audit
+- name: SSH keys audit
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: ssh_audit
+      tags: ['ssh_audit', 'security']
+
+
