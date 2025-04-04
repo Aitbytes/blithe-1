@@ -133,7 +133,7 @@ resource "local_file" "ansible_inventory" {
       }
     }
   })
-  filename = "inventory.yml"
+  filename = "dynamic-inventory.yml"
 }
 
 # Output the external IPs
