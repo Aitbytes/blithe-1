@@ -27,3 +27,15 @@ resource "cloudflare_dns_record" "main_dns_record" {
     create_before_destroy = true
   }
 }
+
+resource "cloudflare_dns_record" "pangolin_subdomain" {
+  zone_id = var.cloudflare_zone_id
+  content = hcloud_server.nodes[0].ipv4_address
+  name    = "*"
+  proxied = false
+  ttl     = 3600
+  type    = "A"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
