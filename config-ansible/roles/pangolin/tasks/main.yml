@@ -24,9 +24,7 @@
     owner: "995"
     group: "995"
   loop:
-    # - db
     - letsencrypt
-    # - logs
     - traefik
 
 
