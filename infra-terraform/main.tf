@@ -136,7 +136,11 @@ resource "local_file" "ansible_inventory" {
   filename = "dynamic-inventory.yml"
 }
 
-# Output the external IPs
+# It is necessary to provide the account with a password
+# to avoid it being lock, and ansible being becoming 
+# unable to connect via ssh 
+# https://unix.stackexchange.com/questions/193066/how-to-unlock-account-for-public-key-ssh-authorization-but-not-for-password-aut 
+
 output "admin_password" {
   value     = random_password.admin_password.result
   sensitive = true
