@@ -89,6 +89,13 @@ variable "admin_username" {
   description = "Username for the admin user"
 }
 
+# Generate random password for admin user
+resource "random_password" "admin_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
 # Create Hetzner Cloud servers
 resource "hcloud_server" "nodes" {
   count             = var.node_count
@@ -106,6 +113,7 @@ resource "hcloud_server" "nodes" {
         groups: sudo
         shell: /bin/bash
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        passwd: ${random_password.admin_password.result}
         ssh_authorized_keys:
           - ${file("~/.ssh/id_rsa.pub")}
     EOF
@@ -126,6 +134,12 @@ resource "local_file" "ansible_inventory" {
 }
 
 # Output the external IPs
+output "admin_password" {
+  value     = random_password.admin_password.result
+  sensitive = true
+  description = "Generated admin password (sensitive)"
+}
+
 output "external_ips" {
   value = {
     for i in range(var.node_count) :
