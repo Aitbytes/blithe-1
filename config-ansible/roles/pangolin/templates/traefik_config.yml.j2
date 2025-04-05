@@ -36,9 +36,13 @@ certificatesResolvers:
     acme:
       email: {{ acme_email }}
       storage: "/letsencrypt/acme.json"
-      #caServer: "https://acme-v02.api.letsencrypt.org/directory"
-      httpChallenge:
-        entryPoint: web
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudflare
+        delayBeforeCheck: 0
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
 
 
 serversTransport:
