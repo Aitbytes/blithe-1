@@ -34,7 +34,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: aittaleb.med08@gmail.com # REPLACE THIS WITH YOUR EMAIL
+      email: {{ acme_email }}
       storage: "/letsencrypt/acme.json"
       #caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
