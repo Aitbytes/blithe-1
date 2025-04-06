@@ -21,6 +21,7 @@ terraform.rc
 __pycache__/
 ansible.log
 dynamic-inventory.yml
+inventory.yml
 
 # Secrets and sensitive files
 **/secrets/*
