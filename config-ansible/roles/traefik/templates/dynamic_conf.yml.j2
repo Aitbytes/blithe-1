@@ -1,0 +1,46 @@
+http:
+  routers:
+{% for service in traefik_services %}
+    {{ service.name }}:
+      entryPoints:
+        - websecure
+      rule: "Host(`{{ service.domain }}`)"
+      service: "{{ service.name }}"
+      tls:
+        certResolver: cloudflare
+{% endfor %}
+
+  services:
+{% for service in traefik_services %}
+    {{ service.name }}:
+      loadBalancer:
+        servers:
+          - url: "{{ service.url }}"
+{% endfor %}
+
+  middlewares:
+    secHeaders:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+
+tcp:
+  routers:
+    ssh-router:
+      entryPoints:
+        - "git-ssh"
+      rule: "HostSNI(`*`)"
+      service: "ssh-service"
+
+  services:
+    ssh-service:
+      loadBalancer:
+        servers:
+          - address: "192.168.0.50:6022"
+
