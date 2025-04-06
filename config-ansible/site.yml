@@ -19,14 +19,14 @@
     - role: docker
       tags: ['docker']
 
-# Third play : Install pangolin and portainer on the machine
-- name: Install and configure Pangolin
+# Third play  Configure Traefik reverse proxy
+- name: Configure Traefik
   hosts: all
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
   roles:
-    - role: pangolin
-      tags: ['pangolin']
+    - role: traefik
+      tags: ['traefik']
 
 
