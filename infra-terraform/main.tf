@@ -104,6 +104,7 @@ resource "hcloud_server" "nodes" {
   image             = var.image
   backups           = false
   delete_protection = false
+  location          = "nbg1"
   ssh_keys          = [hcloud_ssh_key.main.id]
   lifecycle {
     create_before_destroy = false
