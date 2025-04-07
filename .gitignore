@@ -1,0 +1,64 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Ansible
+*.retry
+.ansible
+.ansible_cache/
+*.pyc
+__pycache__/
+ansible.log
+dynamic-inventory.yml
+inventory.yml
+
+# Secrets and sensitive files
+**/secrets/*
+*.pem
+*.key
+*_rsa
+*_ed25519
+*.pub
+.env
+.env.*
+*password*
+*secret*
+*credential*
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+

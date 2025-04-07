@@ -1,0 +1,74 @@
+---
+# Install required packages
+- name: Install required system packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg
+      - python3-pip  
+    state: present
+    update_cache: yes
+
+# Add Docker GPG key
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+# Add Docker Repository
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb [arch=arm64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+    state: present
+
+# Install Docker
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - python3-docker 
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+
+# Configure Docker daemon
+- name: Create Docker daemon config directory
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Configure Docker daemon
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker
+
+# Ensure Docker service is running
+- name: Ensure Docker service is running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+# Create docker group and add user
+# - name: Ensure Docker group exists
+#   group:
+#     name: docker
+#     state: present
+#
+# - name: Add user to Docker group
+#   user:
+#     name: "{{ ansible_user }}"
+#     groups: docker
+#     append: yes
+

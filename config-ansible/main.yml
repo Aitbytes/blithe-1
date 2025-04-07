@@ -1,0 +1,12 @@
+---
+- name: Configure servers with security and Docker
+  hosts: all
+  become: true
+  
+  roles:
+    - role: security
+      tags: ['security']
+    
+    - role: docker
+      tags: ['docker']
+

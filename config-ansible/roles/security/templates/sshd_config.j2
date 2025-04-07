@@ -1,0 +1,29 @@
+# Security hardened sshd_config
+Port {{ ssh_port | default('22') }}
+Protocol 2
+
+# Authentication
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+
+# Other security settings
+X11Forwarding no
+AllowTcpForwarding no
+AllowAgentForwarding no
+MaxAuthTries 3
+LoginGraceTime 60
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Keep alive
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+# Allow only specific users/groups (customize as needed)
+AllowUsers {{ ssh_allowed_users | default('*') }}
+

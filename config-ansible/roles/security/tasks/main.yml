@@ -1,0 +1,74 @@
+---
+
+- name: Ensure sudo group can sudo without password
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+
+# SSH hardening
+- name: Update SSH configuration
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0600'
+  notify: restart sshd
+
+- name: Ensure SSH service is enabled and running
+  service:
+    name: sshd
+    state: started
+    enabled: yes
+
+# UFW configuration
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Set default UFW policies
+  ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  loop:
+    - { direction: 'incoming', policy: 'deny' }
+    - { direction: 'outgoing', policy: 'allow' }
+
+- name: Allow SSH connections
+  ufw:
+    rule: allow
+    port: "{{ ssh_port | default('22') }}"
+    proto: tcp
+
+- name: Allow HTTP connections
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Allow HTTPS connections
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
+- name: Allow WireGuard VPN connections
+  ufw:
+    rule: allow
+    port: '51820'
+    proto: udp
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
+- name: Unlock admin user account
+  command: usermod -U "{{ admin_username }}"
+  become: true
+
+

@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  tailscale-traefik:
+    image: tailscale/tailscale
+    container_name: tailscale
+    hostname: traefik
+    networks:
+      - traefik-net 
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TS_AUTHKEY={{ tailscale_authkey }}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--accept-routes
+    volumes:
+      - {{ docker_base_dir }}/config/tailscale/state/:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    network_mode: service:tailscale-traefik
+    environment:
+      - CF_API_EMAIL={{ cloudflare_email }}
+      - CF_DNS_API_TOKEN={{ cloudflare_api_token }}
+    depends_on:
+      - tailscale-traefik
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{ docker_base_dir }}/config/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - {{ docker_base_dir }}/config/traefik/dynamic:/etc/traefik/dynamic:ro
+      - {{ docker_base_dir }}/config/traefik/certs:/certs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.rule=Host(`{{ traefik_dashboard_domain }}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users={{ traefik_dashboard_users | default(['user:$$apr1$$fBQ9.Ebx$$CyHIiFffhSjucAfBVJOAy1']) | join(',') }}"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+
+
+networks:
+  traefik-net:
+    external: true
+

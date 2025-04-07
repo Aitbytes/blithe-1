@@ -1,0 +1,41 @@
+---
+- name: Create Traefik directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ docker_base_dir }}/config/traefik"
+    - "{{ docker_base_dir }}/config/traefik/dynamic"
+    - "{{ docker_base_dir }}/config/traefik/certs"
+    - "{{ docker_base_dir }}/compose/traefik/"
+    - "{{ docker_base_dir }}/config/tailscale/state/"
+
+- name: Create Traefik network
+  community.docker.docker_network:
+    name: traefik-net
+    state: present
+
+- name: Template Traefik static configuration
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: "{{ docker_base_dir }}/config/traefik/traefik.yml"
+    mode: '0644'
+
+- name: Template Traefik dynamic configuration
+  ansible.builtin.template:
+    src: dynamic_conf.yml.j2
+    dest: "{{ docker_base_dir }}/config/traefik/dynamic/conf.yml"
+    mode: '0644'
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_base_dir }}/compose/traefik/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Traefik container
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_base_dir }}/compose/traefik"
+    state: present
+    pull: missing

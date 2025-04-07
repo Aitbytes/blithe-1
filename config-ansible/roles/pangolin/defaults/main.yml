@@ -1,0 +1,6 @@
+---
+# Default variables for Pangolin role
+docker_base_dir: /srv/docker
+pangolin_domain: pangolin.{{ hostname | default('aitbytes.fyi') }}
+acme_email: aittaleb.med08@gmail.com
+
