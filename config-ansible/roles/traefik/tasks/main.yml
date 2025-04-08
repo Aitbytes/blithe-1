@@ -31,6 +31,11 @@
     dest: "{{ docker_base_dir }}/config/traefik/dynamic/conf.yml"
     mode: '0644'
 
+- name: Create Traefik network
+  community.docker.docker_network:
+    name: traefik-net
+    state: present
+
 - name: Template Docker Compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
