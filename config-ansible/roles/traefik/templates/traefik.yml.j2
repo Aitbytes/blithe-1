@@ -37,7 +37,7 @@ certificatesResolvers:
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: false
+    exposedByDefault: true
     network: traefik-net
   file:
     directory: "/etc/traefik/dynamic"
