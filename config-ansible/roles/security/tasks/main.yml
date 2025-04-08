@@ -63,6 +63,12 @@
     port: '51820'
     proto: udp
 
+- name: Allow ssh connections for gitlab
+  ufw:
+    rule: allow
+    port: '6022'
+    proto: udp
+
 - name: Enable UFW
   ufw:
     state: enabled
