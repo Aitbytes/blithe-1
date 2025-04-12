@@ -1,0 +1,3 @@
+[submodule "config-ansible/roles/observability"]
+	path = config-ansible/roles/observability
+	url = git@gitlab.devolab.cloud:devolab/technical-components/ansible/roles/observability-stack-installation-on-docker.git
