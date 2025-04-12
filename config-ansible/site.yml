@@ -29,7 +29,6 @@
     - role: traefik
       tags: ['traefik']
 
-
 # Fourth play configure keecloak
 - name: Configure Traefik
   hosts: all
@@ -49,3 +48,13 @@
   roles:
     - role: observability
       tags: ['observability']
+# Fourth play  Configure additional services
+#- name: Configure additional services
+#  hosts: all
+#  become: yes
+#  vars:
+#    ansible_user: "{{ admin_username }}"
+#  roles:
+#    - role: services
+#      tags: ['services']
+
