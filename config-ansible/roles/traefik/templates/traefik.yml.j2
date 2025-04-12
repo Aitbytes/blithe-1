@@ -19,6 +19,8 @@ entryPoints:
     address: ":443"
   git-ssh:
     address: ":6022"
+  metrics:
+    address: ":8082"
 
 
 certificatesResolvers:
@@ -46,3 +48,6 @@ log:
 
 accessLog: {}
 
+metrics:
+  prometheus:
+    entryPoint: metrics
