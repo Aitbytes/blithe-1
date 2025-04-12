@@ -11,10 +11,13 @@
     - "{{ docker_base_dir }}/compose/traefik/"
     - "{{ docker_base_dir }}/config/tailscale/state/"
 
-- name: Create Traefik network
+- name: Create Necessary network
   community.docker.docker_network:
-    name: traefik-net
+    name: "{{ item }}"
     state: present
+  loop:
+    - traefik-net
+    - monitoring
 
 - name: Template Traefik static configuration
   ansible.builtin.template:
