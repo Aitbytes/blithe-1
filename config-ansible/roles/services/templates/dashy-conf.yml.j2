@@ -1,0 +1,271 @@
+pageInfo:
+  title: Home Lab
+sections:
+  - name: VPS Services
+    icon: fa fa-home
+    items:
+      - title: Portainer
+        icon: hl-portainer
+        statusCheck: true
+        url: https://docker.aitbyteshome.net
+        id: 0_1117_portainer
+      - title: Vaultwarden
+        statusCheck: true
+        icon: hl-vaultwarden
+        url: https://vault.aitbyteshome.net/
+        id: 1_1117_vaultwarden
+      - title: Syncthing
+        icon: hl-syncthing
+        url: https://syncthing.aitbyteshome.net/
+        statusCheck: true
+        id: 2_1117_syncthing
+      - title: n8n
+        icon: hl-n8n
+        url: https://n8n.aitbyteshome.net/
+        statusCheck: true
+        id: 3_1117_nn
+      - title: Paperless
+        icon: hl-paperless
+        url: https://paperless.aitbyteshome.net/
+        statusCheck: true
+        id: 4_1117_paperless
+      - title: Taefik
+        statusCheck: true
+        icon: hl-traefik
+        url: https://traefik.aitbyteshome.net/
+        id: 5_1117_taefik
+      - title: Jellyfin
+        statusCheck: true
+        icon: hl-jellyfin
+        url: https://jellyfin.aitbyteshome.net/
+        id: 6_1117_jellyfin
+      - title: Deluge
+        icon: hl-deluge
+        url: https://deluge.aitbyteshome.net/
+        statusCheck: true
+        id: 7_1117_deluge
+      - title: Filebrowser
+        icon: hl-filebrowser
+        url: https://files.aitbyteshome.net/
+        statusCheck: true
+        id: 8_1117_filebrowser
+      - title: Firefox
+        icon: hl-firefox
+        url: https://firefox.aitbyteshome.net/
+        statusCheck: true
+        id: 9_1117_firefox
+      - title: Teable
+        icon: far fa-database
+        url: https://teable.aitbyteshome.net/
+        statusCheck: true
+        id: 10_1117_teable
+      - title: Audio bookshelf
+        icon: hl-audiobookshelf
+        url: https://abs.aitbyteshome.net
+        target: newtab
+        id: 11_1117_audiobookshelf
+      - title: Navidrome
+        icon: hl-navidrome
+        url: https://navidrome.aitbyteshome.net/
+        target: newtab
+        id: 12_1117_navidrome
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+  - name: Zsus
+    icon: fa fa-laptop
+    items:
+      - title: Proxmox
+        description: proxmox home web admin
+        icon: hl-proxmox
+        statusCheck: true
+        url: http://100.125.19.56:8006
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 0_437_proxmox
+      - title: Portainer
+        description: portainer on Debian-003
+        icon: hl-portainer
+        statusCheck: false
+        url: https://192.168.0.50:9443
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 1_437_portainer
+      - title: Kiwix
+        description: Kiwix on Debian-003
+        icon: hl-kiwix
+        statusCheck: false
+        url: http://192.168.0.50:8081/
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 2_437_kiwix
+      - title: Jellyfin
+        description: Jellyfin on Debian-003
+        icon: hl-jellyfin
+        statusCheck: false
+        url: http://192.168.0.50:8096/web/
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 3_437_jellyfin
+      - title: Filebrowser
+        description: Filebrowser on Debian-003
+        icon: hl-filebrowser
+        statusCheck: false
+        url: http://192.168.0.50:8083
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 4_437_filebrowser
+      - title: Ollama
+        description: Ollama on Debian-003
+        icon: hl-ollama
+        statusCheck: false
+        url: http://192.168.0.50:8085
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 5_437_ollama
+      - title: Wikipedia
+        description: Self-hosted wikipedia on Debian-003
+        icon: si-wikipedia
+        statusCheck: false
+        url: >-
+          http://192.168.0.50:8081/viewer#wikipedia_en_all_maxi_2024-01/A/User%3AThe_other_Kiwix_guy/Landing
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 6_437_wikipedia
+      - title: Windows 10 VM
+        description: Windows 10 VM
+        icon: si-windows
+        statusCheck: false
+        url: >-
+          https://zsus-pve:8006/?console=kvm&novnc=1&vmid=101&vmname=win10ltsc&node=zsus-pve&resize=off
+        statusCheckAllowInsecure: true
+        target: newtab
+        id: 7_437_windowsvm
+      - title: Router
+        description: Admin Pannel for the local router
+        icon: far fa-router
+        url: http://192.168.0.1
+        target: newtab
+        statusCheckAllowInsecure: true
+        id: 8_437_router
+      - title: Pinchflat
+        description: Youtube downloader
+        icon: hl-pinchflat
+        url: http://192.168.0.50:8945
+        target: newtab
+        id: 9_437_pinchflat
+      - title: Atp Cacher
+        description: Cache for apt
+        icon: hl-debian-linux
+        url: http://192.168.0.50:3142/acng-report.html
+        id: 10_437_atpcacher
+      - title: Libre Chat
+        icon: hl-chatgpt
+        url: http://192.168.0.50:3080
+        id: 11_437_librechat
+      - title: paperless
+        icon: hl-paperless
+        url: 192.168.0.50:8087
+        id: 12_437_paperless
+  - name: Social
+    icon: fa-solid fa-globe
+    items:
+      - title: GitHub
+        description: Dashy source code and docs
+        icon: fab fa-github
+        url: https://github.com/Aitbytes
+        target: newtab
+        id: 0_603_github
+      - title: Linkedin
+        description: My linkedin profile
+        icon: favicon
+        target: newtab
+        url: https://www.linkedin.com/in/mohamed-aittaleb-84249325a
+        id: 1_603_linkedin
+      - title: Bluemind
+        description: Mail INSA
+        icon: bluemind-favicon.png
+        target: newtab
+        url: https://mel.insa-toulouse.fr/webapp/mail/
+        id: 2_603_bluemind
+      - title: Daily.dev
+        icon: favicon
+        url: https://app.daily.dev/
+        id: 3_603_dailydev
+  - name: Productivity
+    icon: far fa-rocket
+    items:
+      - title: Todoist
+        description: Todo list
+        icon: favicon
+        url: https://app.todoist.com/app/today
+        target: newtab
+        id: 0_1302_todoist
+      - title: Linkedin
+        description: GCal
+        icon: favicon
+        target: newtab
+        url: https://calendar.google.com/calendar/u/0/r
+        id: 1_1302_linkedin
+  - name: widgets
+    widgets:
+      - type: system-info
+        id: 0_759_systeminfo
+  - name: Management
+    icon: far fa-cloud
+    items:
+      - title: Cloudflare
+        description: Cloudflare
+        icon: favicon-allesedv
+        url: https://dash.cloudflare.com/
+        target: newtab
+        id: 0_1021_cloudflare
+      - title: OVH
+        description: VPS Host
+        icon: favicon
+        target: newtab
+        url: https://www.ovhcloud.com/fr/
+        id: 1_1021_ovh
+      - title: Square Space Domains
+        description: Domain Host
+        icon: favicon
+        target: newtab
+        url: https://domains.squarespace.com/fr/
+        id: 2_1021_squarespacedomains
+      - title: Tailscale
+        description: Mesh VPN
+        icon: hl-tailscale
+        target: newtab
+        url: https://tailscale.com
+        id: 3_1021_tailscale
+      - title: Hetzner
+        icon: favicon
+        url: https://console.hetzner.cloud/projects/10355056/dashboard
+        id: 4_1021_hetzner
+  - name: Local Only (Arch HP)
+    icon: fa fa-computer
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - title: Syncthing
+        description: Syncronisation Tool
+        icon: hl-syncthing
+        url: http://127.0.0.1:8384/
+        id: 0_1620_syncthing
+appConfig:
+  faviconApi: iconhorse
+  auth:
+    users:
+      - user: aitbytes
+        hash: 76BC423964C37E4623A6CF57B324CF2D0B3095837F37CEC534582C132DEBA328
+        type: admin
+  layout: auto
+  iconSize: medium
+  theme: glass-2
