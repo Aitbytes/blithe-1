@@ -30,3 +30,22 @@
       tags: ['traefik']
 
 
+# Fourth play configure keecloak
+- name: Configure Traefik
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: keecloak
+      tags: ['keecloak']
+
+# Fifth play install observability stack
+- name: Prometheus & Grafana
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: observability
+      tags: ['observability']
