@@ -7,6 +7,7 @@ services:
     hostname: traefik
     networks:
       - traefik-net 
+      - monitoring
     ports:
       - "80:80"
       - "443:443"
@@ -52,5 +53,7 @@ services:
 
 networks:
   traefik-net:
+    external: true
+  monitoring:
     external: true
 
