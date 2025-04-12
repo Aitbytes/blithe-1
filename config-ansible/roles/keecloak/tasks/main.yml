@@ -1,0 +1,69 @@
+---
+- name: Create Keecloak base config directory
+  file:
+    path: "{{ docker_base_dir }}/config/pangolin"
+    state: directory
+    mode: '0755'
+    owner: "995"
+    group: "995"
+
+- name: Create Pangolin base compose directory
+  file:
+    path: "{{ docker_base_dir }}/compose/pangolin"
+    state: directory
+    mode: '0755'
+    owner: "995"
+    group: "995"
+#===== https://docs.fossorial.io/Getting%20Started/Manual%20Install%20Guides/docker-compose#purpose-of-each-file ===============
+
+- name: Create Pangolin subdirectories
+  file:
+    path: "{{ docker_base_dir }}/config/pangolin/{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: "995"
+    group: "995"
+  loop:
+    - letsencrypt
+    - traefik
+
+
+- name: Create empty ACME JSON file
+  file:
+    path: "{{ docker_base_dir }}/config/pangolin/letsencrypt/acme.json"
+    state: touch
+    mode: '0600'  # Required permission for acme.json
+    owner: "995"
+    group: "995"
+
+- name: Copy Pangolin configuration files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ docker_base_dir }}/config/pangolin/{{ item.dest }}"
+    mode: '0644'
+    owner: "995"
+    group: "995"
+  loop:
+    - { src: "config.yml.j2", dest: "config.yml" }
+    - { src: "traefik_config.yml.j2", dest: "traefik/traefik_config.yml" }
+    - { src: "dynamic_config.yml.j2", dest: "traefik/dynamic_config.yml" }
+
+- name: Copy Docker compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ docker_base_dir }}/compose/pangolin/docker-compose.yml"
+    mode: '0644'
+    owner: "995"
+    group: "995"
+
+- name: Run Pangolin Docker compose stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_base_dir }}/compose/pangolin"
+    files:
+      - docker-compose.yml
+    state: present
+    pull: missing
+    recreate: always
+  become: true
+
+
