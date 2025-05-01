@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: {{ wordpress_image }}
+    restart: unless-stopped
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+      - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_CONFIG_EXTRA=
+
+        /* Redis configuration */
+
+        define('WP_REDIS_HOST', 'redis');
+
+        define('WP_REDIS_PORT', 6379);
+
+        define('WP_REDIS_TIMEOUT', 1);
+
+        define('WP_REDIS_READ_TIMEOUT', 1);
+
+        define('WP_REDIS_DATABASE', 0);
+    volumes:
+      - ./wordpress:/var/www/html
+    networks:
+      - wordpress-net
+    ports:
+      - 8086:80
+    deploy:
+      resources:
+        limits:
+          memory: {{ wordpress_memory_limit }}
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - wordpress-net
+    volumes:
+      - ./redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  db:
+    image: {{ mariadb_image }}
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+      - MYSQL_USER=${WORDPRESS_DB_USER}
+      - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - wordpress-net
+    deploy:
+      resources:
+        limits:
+          memory: {{ mariadb_memory_limit }}
+
+networks:
+  wordpress-net:
+    name: wordpress-net
+

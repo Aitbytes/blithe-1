@@ -1,0 +1,8 @@
+---
+- name: restart wordpress
+  community.docker.docker_compose_v2:
+    project_src: "{{ wordpress_data_dir }}"
+    files:
+      - docker-compose.yml
+    state: restarted
+
