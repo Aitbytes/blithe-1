@@ -37,10 +37,19 @@ tcp:
         - "git-ssh"
       rule: "HostSNI(`*`)"
       service: "ssh-service"
+    mysql-router:
+      entryPoints:
+        - "mysql"
+      rule: "HostSNI(`*`)"
+      service: "mysql-service"
 
   services:
     ssh-service:
       loadBalancer:
         servers:
           - address: "192.168.0.50:6022"
+    mysql-service:
+      loadBalancer:
+        servers:
+          - address: "192.168.0.50:3306"
 
