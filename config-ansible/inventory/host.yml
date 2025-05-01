@@ -2,10 +2,16 @@ all:
   children:
     nodes:
       hosts:
-        aitbytes.fyi:
-          ansible_host: aitbytes.fyi
-          ansible_user: adminuser
+        # aitbytes.fyi:
+          # ansible_host: aitbytes.fyi
+          # ansible_user: adminuser
+          # # You can add more host variables here if needed
+          # # ansible_user: your_ssh_user
+          # ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+          # ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        debian003:
+          ansible_host: 192.168.0.50
+          ansible_user: root
           # You can add more host variables here if needed
           # ansible_user: your_ssh_user
           ansible_ssh_private_key_file: "~/.ssh/id_rsa"
-          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
