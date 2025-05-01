@@ -1,7 +1,7 @@
 ---
 # First play: Setup admin user (runs as root)
 - name: Initial setup
-  hosts: all
+  hosts: aitbytes.fyi
   become: yes
   vars:
     ansible_user: "{{ hostvars[inventory_hostname]['ansible_user'] | default('root') }}"
@@ -11,7 +11,7 @@
 
 # Second play: Configure system (runs as admin)
 - name: System configuration
-  hosts: all
+  hosts: aitbytes.fyi
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
@@ -21,7 +21,7 @@
 
 # Third play  Configure Traefik reverse proxy
 - name: Configure Traefik
-  hosts: all
+  hosts: "aitbytes.fyi"
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
@@ -31,7 +31,7 @@
 
 # Fourth play configure keecloak
 - name: Configure Traefik
-  hosts: all
+  hosts: aitbytes.fyi
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
@@ -41,13 +41,22 @@
 
 # Fifth play install observability stack
 - name: Prometheus & Grafana
-  hosts: all
+  hosts: aitbytes.fyi
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
   roles:
     - role: observability
       tags: ['observability']
+
+- name: Install Wordpress
+  hosts: debian003
+  become: yes
+  roles:
+    - role: wordpress
+      tags: ['wordpress']
+
+
 # Fourth play  Configure additional services
 #- name: Configure additional services
 #  hosts: all
