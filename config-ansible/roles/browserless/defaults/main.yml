@@ -1,0 +1,7 @@
+---
+browserless_port: 3000
+browserless_max_concurrent: 10
+browserless_timeout: 30000
+browserless_max_queue: 10
+browserless_token: "{{ vault_browserless_token }}"
+browserless_workspace_dir: /data
