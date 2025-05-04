@@ -56,6 +56,14 @@
     - role: wordpress
       tags: ['wordpress']
 
+- name: Install Browserless
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: browserless
+      tags: ['browserless']
 
 # Fourth play  Configure additional services
 #- name: Configure additional services
