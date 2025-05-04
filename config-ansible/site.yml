@@ -73,6 +73,15 @@
   roles:
     - role: minio
       tags: ['minio']
+
+- name: Install Vault
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: vault
+      tags: ['vault']
 # Fourth play  Configure additional services
 #- name: Configure additional services
 #  hosts: all
