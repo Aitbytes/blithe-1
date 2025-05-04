@@ -15,7 +15,7 @@ resource "cloudflare_dns_record" "main_dns_record" {
   }
 }
 
-resource "cloudflare_dns_record" "pangolin_subdomain" {
+resource "cloudflare_dns_record" "wildcard_subdomain" {
   zone_id = var.cloudflare_zone_id
   content = hcloud_server.nodes[0].ipv4_address
   name    = "*"
