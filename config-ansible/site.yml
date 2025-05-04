@@ -65,6 +65,14 @@
     - role: browserless
       tags: ['browserless']
 
+- name: Install Minio
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: minio
+      tags: ['minio']
 # Fourth play  Configure additional services
 #- name: Configure additional services
 #  hosts: all
