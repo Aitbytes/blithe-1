@@ -1,0 +1,30 @@
+---
+- name: Create Service base config directories
+  file:
+    path: "{{ docker_base_dir }}{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: "999"
+    group: "999"
+  loop:
+    - /compose/browserless
+    - /data/browserless/
+    - /data/browserless/sessions
+
+- name: Copy config files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ docker_base_dir }}{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - { "src": "docker-compose.yml.j2", "dest": "/compose/browserless/docker-compose.yml"}
+
+- name: Run Docker compose stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_base_dir }}/compose/browserless/"
+    files:
+      - docker-compose.yml
+    state: present
+    pull: missing
+    recreate: always
+  become: true
