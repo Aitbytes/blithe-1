@@ -1,0 +1,27 @@
+networks:
+  traefik-net:
+    external: true
+
+services:
+  browserless:
+    image: browserless/chrome:latest
+    container_name: browserless
+    networks:
+      - traefik-net
+    volumes:
+      - {{ docker_base_dir }}/data/browserless:/data
+    environment:
+      - MAX_CONCURRENT_SESSIONS={{ browserless_max_concurrent }}
+      - CONNECTION_TIMEOUT={{ browserless_timeout }}
+      - MAX_QUEUE_LENGTH={{ browserless_max_queue }}
+      - TOKEN={{ browserless_token }}
+      - WORKSPACE_DIR={{ browserless_workspace_dir }}
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.browserless.rule=Host(`browserless.{{ hostname }}`)"
+      - "traefik.http.routers.browserless.entrypoints=websecure"
+      - "traefik.http.routers.browserless.tls=true"
+      - "traefik.http.routers.browserless.tls.certresolver=letsencrypt"
+      - "traefik.http.services.browserless.loadbalancer.server.port=3000"
+
