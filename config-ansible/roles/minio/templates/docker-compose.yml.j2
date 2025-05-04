@@ -1,0 +1,18 @@
+networks:
+  traefik-net:
+    external: true
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    networks:
+      - traefik-net
+    command: server --console-address ":9001" /data
+    environment:
+      - MINIO_ROOT_USER={{ minio_root_user }}
+      - MINIO_ROOT_PASSWORD={{ minio_root_password }}
+    volumes:
+      - {{ minio_data_dir }}:/data
+    restart: unless-stopped
+
