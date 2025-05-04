@@ -1,0 +1,8 @@
+---
+# Minio configuration defaults
+minio_root_user: "admin"
+minio_root_password: "{{ vault_minio_root_password }}"  # Should be defined in vault
+minio_console_port: "9001"
+minio_api_port: "9000"
+minio_data_dir: "{{ docker_base_dir }}/data/minio"
+
