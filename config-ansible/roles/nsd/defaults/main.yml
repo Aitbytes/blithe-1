@@ -7,6 +7,9 @@ nsd_port: 53
 # Docker image version
 nsd_image: "ghcr.io/the-kube-way/nsd:latest"
 
+# NSD user/group ID
+nsd_uid: 991
+nsd_gid: 991
 # Resource limits
 nsd_memory_limit: "256M"
 
