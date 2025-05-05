@@ -10,6 +10,7 @@
     - "{{ nsd_data_dir }}"
     - "{{ nsd_data_dir }}/zones"
     - "{{ nsd_data_dir }}/conf"
+    - "{{ nsd_data_dir }}/keys"
 
 - name: Template NSD configuration
   template:
