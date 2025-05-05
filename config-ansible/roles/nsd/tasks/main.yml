@@ -4,6 +4,8 @@
     path: "{{ item }}"
     state: directory
     mode: '0755'
+    owner: "{{ nsd_uid }}"
+    group: "{{ nsd_gid }}"
   loop:
     - "{{ nsd_data_dir }}"
     - "{{ nsd_data_dir }}/zones"
