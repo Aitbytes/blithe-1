@@ -12,7 +12,7 @@ services:
       - "{{ nsd_port }}:53/udp"
       - "{{ nsd_port }}:53/tcp"
     volumes:
-      - ./conf:/etc/nsd
+      - ./conf:/etc/nsd:ro
       - ./zones:/zones
     networks:
       - nsd-net
