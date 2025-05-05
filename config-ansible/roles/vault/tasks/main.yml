@@ -1,0 +1,31 @@
+---
+- name: Create Vault directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ docker_base_dir }}/compose/vault"
+    - "{{ vault_data_dir }}"
+    - "{{ vault_config_dir }}"
+    - "{{ vault_logs_dir }}"
+
+- name: Copy configurations
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ docker_base_dir }}{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - { "src": "docker-compose.yml.j2", "dest": "/compose/vault/docker-compose.yml" }
+    - { "src": "config.hcl.j2", "dest": "/config/vault/config.hcl" }
+
+- name: Run Docker compose stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_base_dir }}/compose/vault/"
+    files:
+      - docker-compose.yml
+    state: present
+    pull: missing
+    recreate: always
+  become: true
+
