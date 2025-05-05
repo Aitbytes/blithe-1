@@ -56,6 +56,13 @@
     - role: wordpress
       tags: ['wordpress']
 
+- name: Install NSD
+  hosts: debian003
+  become: yes
+  roles:
+    - role: nsd
+      tags: ['nsd']
+
 - name: Install Browserless
   hosts: aitbytes.fyi
   become: yes
