@@ -1,7 +1,7 @@
 ---
 # NSD Configuration
 nsd_data_dir: /data/docker/nsd
-nsd_domain: "{{ hostname }}"
+nsd_domain: "aitbytes.lan"
 nsd_port: 53
 
 # Docker image version
