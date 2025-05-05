@@ -14,6 +14,7 @@ services:
     volumes:
       - ./conf:/etc/nsd:ro
       - ./zones:/zones
+      - ./keys:/keys:ro
     networks:
       - nsd-net
     deploy:
