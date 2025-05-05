@@ -1,0 +1,27 @@
+version: '3.8'
+
+networks:
+  traefik-net:
+    external: true
+
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    networks:
+      - traefik-net
+    ports:
+      - "{{ vault_api_port }}:8200"
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      - VAULT_API_ADDR=http://0.0.0.0:8200
+
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - {{ vault_data_dir }}:/vault/file:rw
+      - {{ vault_config_dir }}:/vault/config:rw
+      - {{ vault_logs_dir }}:/vault/logs:rw
+    command: server
+    restart: unless-stopped
+
