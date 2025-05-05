@@ -5,7 +5,7 @@ nsd_domain: "aitbytes.lan"
 nsd_port: 53
 
 # Docker image version
-nsd_image: "ultimum/nsd:latest"
+nsd_image: "ghcr.io/the-kube-way/nsd:latest"
 
 # Resource limits
 nsd_memory_limit: "256M"
