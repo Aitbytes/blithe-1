@@ -1,0 +1,29 @@
+---
+# NSD Configuration
+nsd_data_dir: /data/docker/nsd
+nsd_domain: "{{ hostname }}"
+nsd_port: 53
+
+# Docker image version
+nsd_image: "ultimum/nsd:latest"
+
+# Resource limits
+nsd_memory_limit: "256M"
+
+# Default zone configuration
+nsd_zones:
+  - name: "{{ nsd_domain }}"
+    zonefile: "{{ nsd_domain }}.zone"
+    ttl: 3600
+    refresh: 28800
+    retry: 7200
+    expire: 604800
+    minimum: 86400
+    ns:
+      - "ns1.{{ nsd_domain }}"
+      - "ns2.{{ nsd_domain }}"
+    records:
+      - { name: "@", type: "A", content: "{{ ansible_default_ipv4.address }}" }
+      - { name: "ns1", type: "A", content: "{{ ansible_default_ipv4.address }}" }
+      - { name: "ns2", type: "A", content: "{{ ansible_default_ipv4.address }}" }
+

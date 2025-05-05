@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  nsd:
+    image: {{ nsd_image }}
+    restart: unless-stopped
+    ports:
+      - "{{ nsd_port }}:53/udp"
+      - "{{ nsd_port }}:53/tcp"
+    volumes:
+      - ./conf:/etc/nsd
+      - ./zones:/zones
+    networks:
+      - nsd-net
+    deploy:
+      resources:
+        limits:
+          memory: {{ nsd_memory_limit }}
+
+networks:
+  nsd-net:
+    name: nsd-net
+

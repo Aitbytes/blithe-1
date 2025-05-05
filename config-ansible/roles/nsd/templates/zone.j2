@@ -1,0 +1,18 @@
+$ORIGIN {{ item.name }}.
+$TTL {{ item.ttl }}
+
+@       IN      SOA     {{ item.ns[0] }}. hostmaster.{{ item.name }}. (
+                        {{ ansible_date_time.epoch }}  ; Serial
+                        {{ item.refresh }}            ; Refresh
+                        {{ item.retry }}             ; Retry
+                        {{ item.expire }}            ; Expire
+                        {{ item.minimum }} )         ; Minimum TTL
+
+{% for ns in item.ns %}
+@       IN      NS      {{ ns }}.
+{% endfor %}
+
+{% for record in item.records %}
+{{ record.name }}   IN      {{ record.type }}      {{ record.content }}
+{% endfor %}
+

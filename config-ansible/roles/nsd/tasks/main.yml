@@ -1,0 +1,40 @@
+---
+- name: Create NSD directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ nsd_data_dir }}"
+    - "{{ nsd_data_dir }}/zones"
+    - "{{ nsd_data_dir }}/conf"
+
+- name: Template NSD configuration
+  template:
+    src: nsd.conf.j2
+    dest: "{{ nsd_data_dir }}/conf/nsd.conf"
+    mode: '0644'
+  notify: restart nsd
+
+- name: Template zone files
+  template:
+    src: zone.j2
+    dest: "{{ nsd_data_dir }}/zones/{{ item.zonefile }}"
+    mode: '0644'
+  loop: "{{ nsd_zones }}"
+  notify: restart nsd
+
+- name: Template docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ nsd_data_dir }}/docker-compose.yml"
+    mode: '0644'
+  notify: restart nsd
+
+- name: Deploy NSD stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ nsd_data_dir }}"
+    files:
+      - docker-compose.yml
+    state: present
+

@@ -1,0 +1,9 @@
+---
+- name: restart nsd
+  community.docker.docker_compose_v2:
+    project_src: "{{ nsd_data_dir }}"
+    files:
+      - docker-compose.yml
+    state: present
+    restarted: true
+
