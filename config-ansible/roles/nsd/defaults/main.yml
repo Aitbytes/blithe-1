@@ -29,4 +29,5 @@ nsd_zones:
       - { name: "@", type: "A", content: "{{ ansible_default_ipv4.address }}" }
       - { name: "ns1", type: "A", content: "{{ ansible_default_ipv4.address }}" }
       - { name: "ns2", type: "A", content: "{{ ansible_default_ipv4.address }}" }
+      - { name: "admin", type: "A", content: "192.168.0.1" }
 
