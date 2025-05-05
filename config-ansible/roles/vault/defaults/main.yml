@@ -1,0 +1,17 @@
+---
+# Vault configuration defaults
+vault_data_dir: "{{ docker_base_dir }}/data/vault/data"
+vault_config_dir: "{{ docker_base_dir }}/config/vault"
+vault_logs_dir: "{{ docker_base_dir }}/data/vault/logs"
+
+# API Configuration
+vault_api_port: "8200"
+vault_cluster_port: "8201"
+
+# Default UI configuration
+vault_ui_enabled: "true"
+
+# Initial Vault configuration
+vault_dev_mode: "false"
+vault_server_name: "vault.{{ hostname }}"
+
