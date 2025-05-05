@@ -4,6 +4,7 @@ services:
   nsd:
     image: {{ nsd_image }}
     restart: unless-stopped
+    read_only: true
     ports:
       - "{{ nsd_port }}:53/udp"
       - "{{ nsd_port }}:53/tcp"
