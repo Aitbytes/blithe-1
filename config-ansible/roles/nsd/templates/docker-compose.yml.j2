@@ -17,6 +17,9 @@ services:
       - ./keys:/keys:ro
     networks:
       - nsd-net
+    environment:
+      - UID={{ nsd_uid }}
+      - GID={{ nsd_gid }}
     deploy:
       resources:
         limits:
