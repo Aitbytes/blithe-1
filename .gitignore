@@ -63,3 +63,5 @@ log/
 *.bak
 *.backup
 
+#Python virtual environment
+*/.venv
