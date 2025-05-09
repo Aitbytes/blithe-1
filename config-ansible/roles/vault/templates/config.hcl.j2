@@ -9,3 +9,9 @@ listener "tcp" {
 
 ui = {{ vault_ui_enabled | lower }}
 
+# Audit device configuration
+audit "file" {
+  path = "/vault/audit/audit.log"
+  log_raw = false
+}
+
