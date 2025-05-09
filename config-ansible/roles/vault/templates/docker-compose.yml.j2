@@ -22,6 +22,7 @@ services:
       - {{ vault_data_dir }}:/vault/file:rw
       - {{ vault_config_dir }}:/vault/config:rw
       - {{ vault_logs_dir }}:/vault/logs:rw
+      - {{ vault_audit_dir }}:/vault/audit:rw
     command: server
     restart: unless-stopped
 
