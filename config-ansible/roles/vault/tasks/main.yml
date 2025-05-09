@@ -9,6 +9,7 @@
     - "{{ vault_data_dir }}"
     - "{{ vault_config_dir }}"
     - "{{ vault_logs_dir }}"
+    - "{{ vault_audit_dir }}"
 
 - name: Copy configurations
   template:
