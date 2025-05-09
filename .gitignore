@@ -22,6 +22,7 @@ __pycache__/
 ansible.log
 dynamic-inventory.yml
 inventory.yml
+*token
 
 # Secrets and sensitive files
 **/secrets/*
