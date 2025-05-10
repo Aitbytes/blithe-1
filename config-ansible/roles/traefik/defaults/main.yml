@@ -1,0 +1,83 @@
+---
+# Traefik ACME (Let's Encrypt) configuration
+docker_base_dir: /srv/docker
+pangolin_domain: pangolin.{{ hostname | default('aitbytes.fyi') }}
+traefik_acme_email: aittaleb.med08@gmail.com
+cloudflare_api_token:  "{{ (lookup('url', vault_url + '/v1/kv/data/cloudflare/aitbytes.fyi', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.api_token_old  }}" 
+
+tailscale_authkey: "{{ (lookup('url',vault_url + '/v1/kv/data/blithe/config-ansible/roles/traefik/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.tailscale_authkey }}"
+
+
+
+# Cloudflare configuration
+cloudflare_email: "aittaleb.med08@gmail.com"
+
+# Traefik dashboard configuration
+traefik_dashboard_domain: "traefik.{{ hostname }}"
+traefik_dashboard_users: []  # List of users in htpasswd format
+
+# Define your services here
+traefik_services:
+  # Never expose admin interfaces publicly
+  #- name: portainer
+  #  domain: portainer.{{ hostname }}
+  #  url: "https://192.168.0.50:9443/"
+  - name: filebrowser
+    domain: files.{{ hostname }}
+    url: "http://192.168.0.50:8083/"
+  - name: jellyfin
+    domain: jellyfin.{{ hostname }}
+    url: "http://192.168.0.50:8096/"
+  - name: kiwix
+    domain: kiwix.{{ hostname }}
+    url: "http://192.168.0.50:8081/"
+  - name: librechat
+    domain: librechat.{{ hostname }}
+    url: "http://192.168.0.50:3080/"
+  - name: paperless
+    domain: paperless.{{ hostname }}
+    url: "http://192.168.0.50:8087/"
+  - name: vaultwarden
+    domain: vault.{{ hostname }}
+    url: "http://192.168.0.50:8088/"
+  - name: n8n
+    domain: n8n.{{ hostname }}
+    url: "http://192.168.0.50:5679/"
+  - name: audiobookshelf
+    domain: abs.{{ hostname }}
+    url: "http://192.168.0.50:8089/"
+  - name: gitlab
+    domain: git.{{ hostname }}
+    url: "http://192.168.0.50:6080/"
+  - name: sonarqube
+    domain: sonar.{{ hostname }}
+    url: "http://192.168.0.50:9001/"
+
+##########################################
+  - name: grafana
+    domain: grafana.{{ hostname }}
+    url: "http://grafana:3000/"
+  - name: prometheus
+    domain: prometheus.{{ hostname }}
+    url: "http://prometheus:9090/"
+  - name: dashy
+    domain: dashy.{{ hostname }}
+    url: "http://192.168.0.50:4000/"
+  - name: wordpress
+    domain: site.{{ hostname }}
+    url: "http://192.168.0.50:8086/"
+  - name: browserless
+    domain: browserless.{{ hostname }}
+    url: "http://browserless:3000/"
+  - name: s3
+    domain: s3.{{ hostname }}
+    url: "http://minio:9000/"
+  - name: minio
+    domain: minio.{{ hostname }}
+    url: "http://minio:9001/"
+  - name: hashi-vault
+    domain: hashi-vault.{{ hostname }}
+    url: "http://vault:8200/"
+  #- name: ollama
+  #  domain: ollama.{{ hostname }}
+  #  url: "http://192.168.0.50:8085/"
