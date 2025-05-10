@@ -18,7 +18,7 @@ resource "hcloud_ssh_key" "main" {
 }
 
 provider "hcloud" {
-  token = var.hcloud_token
+  token = data.vault_kv_secret_v2.hcloud.data["token"]
 }
 
 # Define variables
