@@ -1,0 +1,18 @@
+---
+# WordPress Configuration
+wordpress_data_dir: /data/docker/wordpress
+wordpress_domain: site.{{ hostname }}
+wordpress_db_name: wordpress
+wordpress_db_user: wordpress
+
+wordpress_db_password: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/wordpress/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.wordpress_db_password }}"
+
+wordpress_admin_email: "{{ admin_email }}"
+
+# Docker image versions
+wordpress_image: wordpress-redis:latest
+mariadb_image: mariadb:10.11
+
+# Resource limits
+wordpress_memory_limit: "1G"
+mariadb_memory_limit: "512M"
