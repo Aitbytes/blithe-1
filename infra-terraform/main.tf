@@ -21,33 +21,14 @@ provider "hcloud" {
   token = data.vault_kv_secret_v2.hcloud.data["token"]
 }
 
-# Define variables
-variable "hcloud_token" {
-  type        = string
-  description = "Hetzner Cloud API token"
-  sensitive   = true
-}
-
-variable "cloudflare_api_token" {
-  type        = string
-  description = "Cloudflare API token"
-  sensitive   = true
-}
-
-variable "cloudflare_account_id" {
-  type        = string
-  description = "Cloudflare Account ID"
-}
-
-variable "dns_record_name" {
-  type        = string
-  # default     = "node.example.com"
-  description = "The DNS record name to create/update (e.g., node.example.com). Ensure you control the example.com domain in cloudflare."
-}
-
-variable "cloudflare_zone_id" {
-  type        = string
-  description = "Cloudflare Zone ID"
+# Variables for Cloudflare configuration retrieved from Vault
+locals {
+  cloudflare_config = {
+    api_token    = data.vault_kv_secret_v2.cloudflare.data["api_token"]
+    account_id   = data.vault_kv_secret_v2.cloudflare.data["account_id"]
+    zone_id      = data.vault_kv_secret_v2.cloudflare.data["zone_id"]
+    record_name  = data.vault_kv_secret_v2.cloudflare.data["record_name"]
+  }
 }
 
 variable "node_count" {
