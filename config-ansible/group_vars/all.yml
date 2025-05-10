@@ -1,0 +1,17 @@
+# Admin user configuration
+admin_username: adminuser  # or whatever username you prefer
+docker_base_dir: /srv/docker
+hostname: aitbytes.fyi
+
+
+vault_url: https://hashi-vault.aitbytes.fyi
+
+vault_token: "{{ lookup('env', 'VAULT_TOKEN') }}"
+
+vault_browserless_token: "{{ (lookup('vault_url', vault_url + '/v1/kv/data/blithe/docker/browserless', headers={'X-Vault-Token': vault_token}) | from_json).data.data.vault_browserless_token }}"
+
+vault_minio_root_password: "{{ (lookup('vault_url', vault_url + '/v1/kv/data/blithe/docker/minio', headers={'X-Vault-Token': vault_token}) | from_json).data.data.vault_minio_root_password }}"
+
+traefik_dashboard_users: ["{{ (lookup('vault_url', vault_url + '/v1/kv/data/blithe/docker/traefik', headers={'X-Vault-Token': vault_token}) | from_json).data.data.traefik_dashboard_users }}"]
+
+
