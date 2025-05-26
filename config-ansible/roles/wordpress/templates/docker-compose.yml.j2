@@ -9,6 +9,13 @@ services:
       - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
       - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
       - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      # OpenTelemetry Configuration
+      - OTEL_EXPORTER_OTLP_ENDPOINT=https://otel.{{ hostname }}
+      - OTEL_SERVICE_NAME=wordpress
+      - OTEL_RESOURCE_ATTRIBUTES=deployment.environment={{ wordpress_environment | default('production') }}
+      - OTEL_TRACES_SAMPLER=always_on
+      - OTEL_PHP_TRACES_ENABLED=true
+      - OTEL_PHP_METRICS_ENABLED=true
       - WORDPRESS_CONFIG_EXTRA=
 
         /* Redis configuration */
