@@ -24,6 +24,13 @@
     dest: "{{ wordpress_data_dir }}/Dockerfile"
     mode: '0644'
 
+- name: Copy php.ini
+  template:
+    src: php.ini.j2
+    dest: "{{ wordpress_data_dir }}/php.ini"
+    mode: '0600'
+  notify: restart wordpress
+
 - name: Build custom WordPress image
   community.docker.docker_image:
     name: wordpress-redis:latest
@@ -37,14 +44,13 @@
     src: docker-compose.yml.j2
     dest: "{{ wordpress_data_dir }}/docker-compose.yml"
     mode: '0644'
-  notify: restart wordpress
 
 - name: Template environment file
   template:
     src: wordpress.env.j2
     dest: "{{ wordpress_data_dir }}/.env"
     mode: '0600'
-  notify: restart wordpress
+
 
 - name: Deploy WordPress stack
   community.docker.docker_compose_v2:
