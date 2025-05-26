@@ -69,6 +69,12 @@
     port: '6022'
     proto: udp
 
+- name: Allow otel grpc connections 
+  ufw:
+    rule: allow
+    port: '4317'
+    proto: tcp
+
 - name: Enable UFW
   ufw:
     state: enabled
