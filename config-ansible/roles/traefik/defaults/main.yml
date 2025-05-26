@@ -81,6 +81,9 @@ traefik_services:
   - name: hashi-vault
     domain: hashi-vault.{{ hostname }}
     url: "http://vault:8200/"
+  - name: otel-http
+    domain: otel.{{ hostname }}
+    url: "http://otel-collector:4318/"
   #- name: ollama
   #  domain: ollama.{{ hostname }}
   #  url: "http://192.168.0.50:8085/"
