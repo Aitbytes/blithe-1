@@ -42,6 +42,11 @@ tcp:
         - "mysql"
       rule: "HostSNI(`*`)"
       service: "mysql-service"
+    otlp-grpc-router:
+      entryPoints:
+        - "otlp-grpc"
+      rule: "HostSNI(`*`)"
+      service: "otlp-grpc-service"
 
   services:
     ssh-service:
@@ -52,4 +57,8 @@ tcp:
       loadBalancer:
         servers:
           - address: "192.168.0.50:3306"
+    otlp-grpc-service:
+      loadBalancer:
+        servers:
+          - address: "otel-collector:4317"
 
