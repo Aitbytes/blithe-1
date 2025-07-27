@@ -1,0 +1,30 @@
+---
+- name: Create Copyparty directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ copyparty_data_dir }}"
+    - "{{ copyparty_data_dir }}/files"
+
+- name: Template copyparty.conf
+  template:
+    src: copyparty.conf.j2
+    dest: "{{ copyparty_data_dir }}/copyparty.conf"
+    mode: '0644'
+  notify: restart copyparty
+
+- name: Template docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ copyparty_data_dir }}/docker-compose.yml"
+    mode: '0644'
+  notify: restart copyparty
+
+- name: Deploy Copyparty stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ copyparty_data_dir }}"
+    files:
+      - docker-compose.yml
+    state: present

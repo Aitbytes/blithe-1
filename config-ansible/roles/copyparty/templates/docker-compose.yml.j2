@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  copyparty:
+    image: {{ copyparty_image }}
+    restart: unless-stopped
+    ports:
+      - "{{ copyparty_port }}:3923"
+    volumes:
+      - "{{ copyparty_exposed_dir }}:/w:z"
+      - "{{ copyparty_data_dir }}/copyparty.conf:/etc/copyparty.conf:ro"
+    networks:
+      - copyparty-net
+    deploy:
+      resources:
+        limits:
+          memory: {{ copyparty_memory_limit }}
+
+networks:
+  copyparty-net:
+    name: copyparty-net

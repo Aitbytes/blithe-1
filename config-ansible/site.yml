@@ -63,6 +63,13 @@
     - role: nsd
       tags: ['nsd']
 
+- name: Install Copyparty
+  hosts: debian003
+  become: yes
+  roles:
+    - role: copyparty
+      tags: ['copyparty']
+
 - name: Install Browserless
   hosts: aitbytes.fyi
   become: yes
