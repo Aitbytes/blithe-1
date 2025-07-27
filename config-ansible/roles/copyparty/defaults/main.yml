@@ -3,7 +3,7 @@
 copyparty_data_dir: /data/docker/copyparty
 copyparty_exposed_dir: /data/media
 copyparty_domain: files.{{ hostname }}
-copyparty_image: 9001/copyparty:hovudstraum
+copyparty_image: copyparty/ac:latest 
 copyparty_port: 3923
 copyparty_memory_limit: "256M"
 
