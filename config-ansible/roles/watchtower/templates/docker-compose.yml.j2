@@ -1,0 +1,26 @@
+version: '3.8'
+
+networks:
+  traefik-net:
+    external: true
+
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_SCHEDULE={{ watchtower_schedule }}
+      - WATCHTOWER_CLEANUP={{ watchtower_cleanup | lower }}
+      - WATCHTOWER_LABEL_ENABLE={{ watchtower_label_enable | lower }}
+{% if watchtower_notifications_enabled %}
+      - WATCHTOWER_NOTIFICATIONS={{ watchtower_notifications_enabled | lower }}
+      - WATCHTOWER_NOTIFICATION_URL={{ watchtower_notification_url }}
+{% endif %}
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+

@@ -96,6 +96,22 @@
   roles:
     - role: vault
       tags: ['vault']
+
+- name: Install Adminer
+  hosts: debian003
+  become: yes
+  roles:
+    - role: adminer
+      tags: ['adminer']
+
+- name: Install Watchtower
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: watchtower
+      tags: ['watchtower']
 # Fourth play  Configure additional services
 #- name: Configure additional services
 #  hosts: all

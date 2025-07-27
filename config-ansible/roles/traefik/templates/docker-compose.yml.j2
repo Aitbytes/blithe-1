@@ -25,6 +25,8 @@ services:
       - net_admin
       - sys_module
     restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
   traefik:
     image: traefik:latest
     container_name: traefik
@@ -51,6 +53,7 @@ services:
       - "traefik.http.routers.traefik.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users={{ traefik_dashboard_users | default(['user:$$apr1$$fBQ9.Ebx$$CyHIiFffhSjucAfBVJOAy1']) | join(',') }}"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "com.centurylinklabs.watchtower.enable=true"
 
 
 networks:

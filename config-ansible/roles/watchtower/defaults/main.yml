@@ -1,0 +1,19 @@
+---
+# Watchtower Configuration
+watchtower_data_dir: "{{ docker_base_dir }}/compose/watchtower"
+watchtower_config_dir: "{{ docker_base_dir }}/config/watchtower"
+watchtower_logs_dir: "{{ docker_base_dir }}/logs/watchtower"
+
+# Update schedule (default: check every 6 hours)
+watchtower_schedule: "0 0 */6 * * *"
+
+# Notification settings (optional)
+watchtower_notifications_enabled: false
+watchtower_notification_url: ""
+
+# Cleanup old images
+watchtower_cleanup: true
+
+# Monitor only containers with label
+watchtower_label_enable: true
+

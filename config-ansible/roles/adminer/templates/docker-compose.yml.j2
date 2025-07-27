@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  adminer:
+    image: {{ adminer_image }}
+    restart: unless-stopped
+    networks:
+      - adminer-net
+    ports:
+      - 8097:8080
+    deploy:
+      resources:
+        limits:
+          memory: {{ adminer_memory_limit }}
+
+networks:
+  adminer-net:
+    name: adminer-net
+

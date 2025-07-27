@@ -1,0 +1,7 @@
+---
+# Adminer Configuration
+adminer_data_dir: /data/docker/adminer
+adminer_domain: adminer.{{ hostname }}
+adminer_image: adminer:4.8.1
+adminer_memory_limit: "256M"
+

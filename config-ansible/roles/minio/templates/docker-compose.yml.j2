@@ -15,4 +15,6 @@ services:
     volumes:
       - {{ minio_data_dir }}:/data
     restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
 

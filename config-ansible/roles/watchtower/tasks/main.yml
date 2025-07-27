@@ -1,0 +1,29 @@
+---
+- name: Create Watchtower directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ watchtower_data_dir }}"
+    - "{{ watchtower_config_dir }}"
+    - "{{ watchtower_logs_dir }}"
+
+- name: Copy configurations
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ docker_base_dir }}{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - { "src": "docker-compose.yml.j2", "dest": "/compose/watchtower/docker-compose.yml" }
+
+- name: Run Docker compose stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ watchtower_data_dir }}"
+    files:
+      - docker-compose.yml
+    state: present
+    pull: missing
+    recreate: always
+  become: true
+
