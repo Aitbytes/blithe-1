@@ -63,6 +63,9 @@ traefik_services:
   - name: dashy
     domain: dashy.{{ hostname }}
     url: "http://192.168.0.50:4000/"
+  - name: copyparty
+    domain: copyparty.{{ hostname }}
+    url: 'http://192.168.0.50:3923/'
   - name: wordpress
     domain: site.{{ hostname }}
     url: "http://192.168.0.50:8086/"
