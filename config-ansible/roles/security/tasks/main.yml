@@ -69,11 +69,23 @@
     port: '6022'
     proto: udp
 
-- name: Allow otel grpc connections 
+- name: Allow otel grpc connections
   ufw:
     rule: allow
     port: '4317'
     proto: tcp
+
+- name: Allow Deluge inbound torrent connections (TCP)
+  ufw:
+    rule: allow
+    port: "{{ deluge_inbound_port }}"
+    proto: tcp
+
+- name: Allow Deluge inbound torrent connections (UDP)
+  ufw:
+    rule: allow
+    port: "{{ deluge_inbound_port }}"
+    proto: udp
 
 - name: Enable UFW
   ufw:
