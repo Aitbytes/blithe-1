@@ -3,6 +3,8 @@ admin_username: adminuser  # or whatever username you prefer
 docker_base_dir: /srv/docker
 hostname: aitbytes.fyi
 
+deluge_web_port: 8112
+
 
 vault_url: https://hashi-vault.aitbytes.fyi
 
@@ -13,5 +15,9 @@ vault_browserless_token: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/dock
 vault_minio_root_password: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/docker/minio', headers={'X-Vault-Token': vault_token}) | from_json).data.data.vault_minio_root_password }}"
 
 traefik_dashboard_users: ["{{ (lookup('url', vault_url + '/v1/kv/data/blithe/docker/traefik', headers={'X-Vault-Token': vault_token}) | from_json).data.data.traefik_dashboard_users }}"]
+
+firefox_web_port: 5800
+deluge_inbound_port: 6881
+copyparty_cloud_web_port: 3923
 
 
