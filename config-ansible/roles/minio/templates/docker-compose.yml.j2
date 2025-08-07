@@ -14,6 +14,7 @@ services:
       - MINIO_ROOT_PASSWORD={{ minio_root_password }}
     volumes:
       - {{ minio_data_dir }}:/data
+      - {{ minio_config_dir }}:/root/.minio
     restart: unless-stopped
     labels:
       com.centurylinklabs.watchtower.enable: "true"

@@ -5,4 +5,8 @@ minio_root_password: "{{ vault_minio_root_password }}"  # Should be defined in v
 minio_console_port: "9001"
 minio_api_port: "9000"
 minio_data_dir: "{{ docker_base_dir }}/data/minio"
+minio_config_dir: "{{ docker_base_dir }}/config/minio"
 
+
+minio_azeon_user: "azeon"
+minio_azeon_bucket: "azeon"

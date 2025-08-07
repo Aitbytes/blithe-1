@@ -8,7 +8,7 @@ services:
       - "{{ copyparty_port }}:3923"
     volumes:
       - "{{ copyparty_exposed_dir }}:/w:z"
-      - "{{ copyparty_data_dir }}/copyparty.conf:/etc/copyparty.conf:ro"
+      - "{{ copyparty_data_dir }}/copyparty.conf:/cfg/copyparty.conf:ro"
     networks:
       - copyparty-net
     deploy:
