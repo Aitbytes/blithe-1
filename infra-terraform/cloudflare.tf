@@ -19,7 +19,7 @@ resource "cloudflare_dns_record" "wildcard_subdomain" {
   zone_id = local.cloudflare_config.zone_id
   content = hcloud_server.nodes[0].ipv4_address
   name    = "*"
-  proxied = false
+  proxied = true
   ttl     = 3600
   type    = "A"
   lifecycle {
