@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  otel-tester:
+    build: .
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["--protocol", "http", "--host", "otel-collector", "--port", "4318"]
+    networks:
+      - otel-net
+
+networks:
+  otel-net:
+    driver: bridge
+
