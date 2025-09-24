@@ -29,8 +29,9 @@ Comprehensive infrastructure automation project for deploying containerized serv
 #### Core Infrastructure Services
 * **Reverse Proxy**: Traefik with SSL termination and automatic Let's Encrypt
     * **Role**: [`config-ansible/roles/traefik/`](config-ansible/roles/traefik/)
-    * **Configuration**: [`config-ansible/roles/traefik/templates/traefik.yml.j2`](config-ansible/roles/traefik/templates/traefik.yml.j2:1)
-    * **Services**: 20+ configured services with domain routing
+    * **Static Configuration**: [`config-ansible/roles/traefik/templates/traefik.yml.j2`](config-ansible/roles/traefik/templates/traefik.yml.j2:1)
+    * **Dynamic Configuration**: [`config-ansible/roles/traefik/templates/dynamic_conf.yml.j2`](config-ansible/roles/traefik/templates/dynamic_conf.yml.j2:1)
+    * **Service Discovery**: Hybrid model using both the Docker provider and a file provider for dynamic routing.
 
 * **Monitoring Stack**: Complete observability with Prometheus, Grafana, Loki, Tempo
     * **Role**: [`config-ansible/roles/observability/`](config-ansible/roles/observability/)
@@ -75,6 +76,9 @@ Comprehensive infrastructure automation project for deploying containerized serv
 
 * **Container Updates**: Watchtower for automatic container updates
     * **Role**: [`config-ansible/roles/watchtower/`](config-ansible/roles/watchtower/)
+
+* **Anki Sync Server**: Self-hosted Anki synchronization server
+    * **Role**: [`config-ansible/roles/anki-sync-server/`](config-ansible/roles/anki-sync-server/)
 
 ### Security & Hardening
 * **Security Role**: System security configuration with SSH hardening
