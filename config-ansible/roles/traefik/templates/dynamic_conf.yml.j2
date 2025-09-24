@@ -8,6 +8,10 @@ http:
       service: "{{ service.name }}"
       tls:
         certResolver: cloudflare
+{% if service.basic_auth %}
+      middlewares:
+        - service-auth
+{% endif %}
 {% endfor %}
 
   services:
@@ -19,6 +23,9 @@ http:
 {% endfor %}
 
   middlewares:
+    service-auth:
+      basicAuth:
+        users: "{{ traefik_basic_auth_users | join(',') }}"
     secHeaders:
       headers:
         frameDeny: true

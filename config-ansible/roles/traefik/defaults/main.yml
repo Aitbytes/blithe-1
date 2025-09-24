@@ -11,79 +11,115 @@ tailscale_authkey: "{{ (lookup('url',vault_url + '/v1/kv/data/blithe/config-ansi
 
 # Cloudflare configuration
 cloudflare_email: "aittaleb.med08@gmail.com"
+debian003_url: "192.168.1.50"
 
 # Traefik dashboard configuration
 traefik_dashboard_domain: "traefik.{{ hostname }}"
 traefik_dashboard_users: []  # List of users in htpasswd format
+traefik_basic_auth_users: [ "Momo:$apr1$Hyb/hR0c$sq.Jzv0kJkLs5fo30RC2u/" ] # List of users for service basic auth, in htpasswd format
 
 # Define your services here
 traefik_services:
   # Never expose admin interfaces publicly
   #- name: portainer
   #  domain: portainer.{{ hostname }}
-  #  url: "https://192.168.0.50:9443/"
+  #  url: "https://{{ debian003_url }}:9443/"
+  #  basic_auth: false
   - name: filebrowser
     domain: files.{{ hostname }}
-    url: "http://192.168.0.50:8083/"
+    url: "http://{{ debian003_url }}:8083/"
+    basic_auth: false
   - name: jellyfin
     domain: jellyfin.{{ hostname }}
-    url: "http://192.168.0.50:8096/"
+    url: "http://{{ debian003_url }}:8096/"
+    basic_auth: false
   - name: kiwix
     domain: kiwix.{{ hostname }}
-    url: "http://192.168.0.50:8081/"
+    url: "http://{{ debian003_url }}:8081/"
+    basic_auth: false
   - name: librechat
     domain: librechat.{{ hostname }}
-    url: "http://192.168.0.50:3080/"
+    url: "http://{{ debian003_url }}:3080/"
+    basic_auth: false
   - name: paperless
     domain: paperless.{{ hostname }}
-    url: "http://192.168.0.50:8087/"
+    url: "http://{{ debian003_url }}:8087/"
+    basic_auth: false
   - name: vaultwarden
     domain: vault.{{ hostname }}
-    url: "http://192.168.0.50:8088/"
+    url: "http://{{ debian003_url }}:8088/"
+    basic_auth: false
   - name: n8n
     domain: n8n.{{ hostname }}
-    url: "http://192.168.0.50:5679/"
+    url: "http://{{ debian003_url }}:5679/"
+    basic_auth: false
   - name: audiobookshelf
     domain: abs.{{ hostname }}
-    url: "http://192.168.0.50:8089/"
+    url: "http://{{ debian003_url }}:8089/"
+    basic_auth: false
   - name: gitlab
     domain: git.{{ hostname }}
-    url: "http://192.168.0.50:6080/"
+    url: "http://{{ debian003_url }}:6080/"
+    basic_auth: false
   - name: sonarqube
     domain: sonar.{{ hostname }}
-    url: "http://192.168.0.50:9001/"
+    url: "http://{{ debian003_url }}:9001/"
+    basic_auth: false
 
 ##########################################
   - name: grafana
     domain: grafana.{{ hostname }}
     url: "http://grafana:3000/"
+    basic_auth: false
   - name: prometheus
     domain: prometheus.{{ hostname }}
     url: "http://prometheus:9090/"
+    basic_auth: false
   - name: dashy
     domain: dashy.{{ hostname }}
-    url: "http://192.168.0.50:4000/"
+    url: "http://{{ debian003_url }}:4000/"
+    basic_auth: false
   - name: copyparty
     domain: copyparty.{{ hostname }}
-    url: 'http://192.168.0.50:3923/'
+    url: 'http://{{ debian003_url }}:3923/'
+    basic_auth: false
   - name: wordpress
     domain: site.{{ hostname }}
-    url: "http://192.168.0.50:8086/"
+    url: "http://{{ debian003_url }}:8086/"
+    basic_auth: false
   - name: browserless
     domain: browserless.{{ hostname }}
     url: "http://browserless:3000/"
+    basic_auth: false
   - name: s3
     domain: s3.{{ hostname }}
-    url: "http://minio:9000/"
-  - name: minio
-    domain: minio.{{ hostname }}
-    url: "http://minio:9001/"
+    url: "http://seaweedfs-s3:8333/"
+    basic_auth: false
   - name: hashi-vault
     domain: hashi-vault.{{ hostname }}
     url: "http://vault:8200/"
+    basic_auth: false
   - name: otel-http
     domain: otel.{{ hostname }}
     url: "http://otel-collector:4318/"
+    basic_auth: false
   #- name: ollama
   #  domain: ollama.{{ hostname }}
-  #  url: "http://192.168.0.50:8085/"
+  #  url: "http://{{ debian003_url }}:8085/"
+  #  basic_auth: false
+  - name: firefox
+    domain: firefox.{{ hostname }}
+    url: "http://firefox:{{ firefox_web_port }}/"
+    basic_auth: true
+  - name: copyparty-cloud
+    domain: copyparty-cloud.{{ hostname }}
+    url: "http://copyparty-cloud:{{ copyparty_cloud_web_port }}/"
+    basic_auth: false
+  - name: deluge
+    domain: deluge.{{ hostname }}
+    url: "http://deluge:{{ deluge_web_port }}/"
+    basic_auth: false
+  - name: anki-sync-server
+    domain: anki.{{ hostname }}
+    url: "http://anki-container:27701/"
+    basic_auth: true
