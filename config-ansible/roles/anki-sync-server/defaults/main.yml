@@ -1,0 +1,6 @@
+---
+# defaults file for anki-sync-server
+anki_sync_server_enabled: true
+anki_sync_server_docker_image: "kuklinistvan/anki-sync-server"
+anki_sync_server_docker_image_tag: "latest"
+anki_sync_server_data_path: "{{ docker_base_dir }}/anki-sync-server"

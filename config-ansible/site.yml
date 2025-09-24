@@ -29,6 +29,27 @@
     - role: traefik
       tags: ['traefik']
 
+- name: Install Anki Sync Server
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: anki-sync-server
+      tags: ['anki-sync-server']
+
+
+
+- name: Install Minio
+  hosts: aitbytes.fyi
+  become: yes
+  vars:
+    ansible_user: "{{ admin_username }}"
+  roles:
+    - role: minio
+      tags: ['minio']
+
+
 # Fourth play configure keecloak
 # - name: Configure Traefik
 #   hosts: aitbytes.fyi
@@ -79,14 +100,14 @@
     - role: browserless
       tags: ['browserless']
 
-- name: Install Minio
+- name: Install SeaweedFS
   hosts: aitbytes.fyi
   become: yes
   vars:
     ansible_user: "{{ admin_username }}"
   roles:
-    - role: minio
-      tags: ['minio']
+    - role: seaweedfs
+      tags: ['seaweedfs']
 
 - name: Install Vault
   hosts: aitbytes.fyi
@@ -96,6 +117,7 @@
   roles:
     - role: vault
       tags: ['vault']
+
 
 - name: Install Adminer
   hosts: debian003
@@ -112,6 +134,8 @@
   roles:
     - role: watchtower
       tags: ['watchtower']
+
+
 # Fourth play  Configure additional services
 #- name: Configure additional services
 #  hosts: all

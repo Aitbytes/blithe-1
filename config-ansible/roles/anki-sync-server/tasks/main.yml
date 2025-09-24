@@ -1,0 +1,42 @@
+---
+- name: Create anki-sync-server directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ docker_base_dir }}/compose/anki-sync-server"
+    - "{{ anki_sync_server_data_path }}"
+  when: anki_sync_server_enabled
+
+- name: Copy docker-compose template
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ docker_base_dir }}/compose/anki-sync-server/docker-compose.yml"
+    mode: '0644'
+  when: anki_sync_server_enabled
+
+- name: Run Docker compose stack for anki-sync-server
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_base_dir }}/compose/anki-sync-server/"
+    files:
+      - docker-compose.yml
+    state: present
+    pull: missing
+    recreate: always
+  become: true
+  when: anki_sync_server_enabled
+
+- name: Add anki-sync-server user
+  community.docker.docker_container_exec:
+    container: anki-container
+    command: "sh -c './ankisyncctl.py adduser {{ vault_anki_sync_server_user }}'"
+  changed_when: false
+  when: anki_sync_server_enabled
+
+- name: Set anki-sync-server user password
+  community.docker.docker_container_exec:
+    container: anki-container
+    command: "sh -c './ankisyncctl.py passwd {{ vault_anki_sync_server_user }} <<EOF\n{{ vault_anki_sync_server_password }}\n{{ vault_anki_sync_server_password }}\nEOF'"
+  changed_when: false
+  when: anki_sync_server_enabled

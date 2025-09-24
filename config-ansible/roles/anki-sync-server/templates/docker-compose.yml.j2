@@ -1,0 +1,15 @@
+---
+services:
+  anki-container:
+    platform: linux/amd64
+    image: "{{ anki_sync_server_docker_image }}:{{ anki_sync_server_docker_image_tag }}"
+    container_name: anki-container
+    restart: always
+    volumes:
+      - "{{ anki_sync_server_data_path }}:/app/data"
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true
