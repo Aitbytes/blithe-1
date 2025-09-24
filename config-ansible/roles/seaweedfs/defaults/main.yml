@@ -1,0 +1,4 @@
+---
+# SeaweedFS configuration
+seaweedfs_compose_dir: "{{ docker_base_dir }}/compose/seaweedfs"
+seaweedfs_data_dir: "{{ docker_base_dir }}/data/seaweedfs"

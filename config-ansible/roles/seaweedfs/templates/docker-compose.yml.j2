@@ -1,0 +1,61 @@
+version: "3.8"
+
+networks:
+  traefik-net:
+    external: true
+
+services:
+  seaweedfs-master:
+    image: chrislusf/seaweedfs:latest
+    container_name: seaweedfs-master
+    command: "master -ip=seaweedfs-master"
+    volumes:
+      - "{{ seaweedfs_data_dir }}/master:/data"
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - default
+
+  seaweedfs-volume:
+    image: chrislusf/seaweedfs:latest
+    container_name: seaweedfs-volume
+    command: 'volume -mserver="seaweedfs-master:9333" -ip=seaweedfs-volume'
+    depends_on:
+      - seaweedfs-master
+    volumes:
+      - "{{ seaweedfs_data_dir }}/volume:/data"
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - default
+
+  seaweedfs-filer:
+    image: chrislusf/seaweedfs:latest
+    container_name: seaweedfs-filer
+    command: 'filer -master="seaweedfs-master:9333"'
+    depends_on:
+      - seaweedfs-master
+      - seaweedfs-volume
+    volumes:
+      - "{{ seaweedfs_data_dir }}/filer:/data"
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - default
+      - traefik-net
+
+  seaweedfs-s3:
+    image: chrislusf/seaweedfs:latest
+    container_name: seaweedfs-s3
+    command: 's3 -filer.address="seaweedfs-filer:8888"'
+    depends_on:
+      - seaweedfs-filer
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - default
+      - traefik-net

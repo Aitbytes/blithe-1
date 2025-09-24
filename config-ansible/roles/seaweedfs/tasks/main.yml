@@ -1,0 +1,26 @@
+---
+- name: Create SeaweedFS directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ seaweedfs_compose_dir }}"
+    - "{{ seaweedfs_data_dir }}/master"
+    - "{{ seaweedfs_data_dir }}/volume"
+    - "{{ seaweedfs_data_dir }}/filer"
+
+- name: Copy Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ seaweedfs_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+  notify: restart seaweedfs
+
+- name: Run Docker compose stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ seaweedfs_compose_dir }}"
+    state: present
+    pull: missing
+    recreate: always
+  become: true
