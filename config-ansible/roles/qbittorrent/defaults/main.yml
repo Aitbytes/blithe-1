@@ -1,0 +1,8 @@
+---
+# qBittorrent configuration defaults
+qbittorrent_image: "linuxserver/qbittorrent:latest"
+qbittorrent_container_name: "qbittorrent"
+qbittorrent_data_dir: "/data/docker/qbittorrent"
+qbittorrent_port: "8080"
+qbittorrent_downloads_dir: "/data/media/downloads"
+qbittorrent_torrenting_port: "6881"

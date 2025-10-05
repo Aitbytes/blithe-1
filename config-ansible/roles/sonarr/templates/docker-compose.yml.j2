@@ -1,0 +1,21 @@
+services:
+  sonarr:
+    image: {{ sonarr_image }}
+    container_name: {{ sonarr_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ sonarr_tv_dir }}:/tv"
+      - "{{ sonarr_downloads_dir }}:/downloads"
+    ports:
+      - "{{ sonarr_port }}:8989"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true

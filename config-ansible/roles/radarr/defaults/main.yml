@@ -1,0 +1,8 @@
+---
+# Radarr configuration defaults
+radarr_image: "linuxserver/radarr:latest"
+radarr_container_name: "radarr"
+radarr_data_dir: "/data/docker/radarr"
+radarr_port: "7878"
+radarr_movies_dir: "/data/media/movies"
+radarr_downloads_dir: "/data/media/downloads"

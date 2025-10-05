@@ -1,0 +1,5 @@
+---
+- name: Create "arr" stack network
+  community.docker.docker_network:
+    name: arr-net
+    state: present

@@ -1,0 +1,8 @@
+---
+# Sonarr configuration defaults
+sonarr_image: "linuxserver/sonarr:latest"
+sonarr_container_name: "sonarr"
+sonarr_data_dir: "/data/docker/sonarr"
+sonarr_port: "8989"
+sonarr_tv_dir: "/data/media/tv"
+sonarr_downloads_dir: "/data/media/downloads"
