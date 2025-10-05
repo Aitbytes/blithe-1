@@ -1,0 +1,28 @@
+name: Verify Nix Shell
+
+on:
+  push:
+    branches:
+      - feature/verify-shell-nix
+  pull_request:
+
+jobs:
+  check-nix-shell:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Remove homeless-shelter directory
+        run: sudo rm -rf /homeless-shelter
+
+      - name: Check Nix Shell
+        env:
+          NIXPKGS_ALLOW_UNFREE: 1
+        run: |
+          nix-shell --pure --run "echo 'Nix shell is working' && terraform --version && ansible --version && git --version && act --version"

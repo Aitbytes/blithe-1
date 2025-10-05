@@ -1,0 +1,6 @@
+---
+- name: restart runner
+  systemd:
+    name: actions.runner
+    state: restarted
+    daemon_reload: yes

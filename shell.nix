@@ -14,7 +14,7 @@ pkgs.mkShell {
     act
 
     # Utilities
-    apacheHttpdTools # for htpasswd
+    apacheHttpd # for htpasswd
   ];
 
   shellHook = ''
