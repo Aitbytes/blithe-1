@@ -60,15 +60,7 @@
 #     - role: keecloak
 #       tags: ['keecloak']
 
-# Fifth play install observability stack
-- name: Prometheus & Grafana
-  hosts: aitbytes.fyi
-  become: yes
-  vars:
-    ansible_user: "{{ admin_username }}"
-  roles:
-    - role: observability
-      tags: ['observability']
+
 
 - name: Install Wordpress
   hosts: debian003
