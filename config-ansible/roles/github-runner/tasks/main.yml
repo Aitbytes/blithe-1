@@ -59,7 +59,7 @@
 - name: Configure the runner
   ansible.builtin.command: >
     ./config.sh --url https://github.com/{{ github_repo_owner }}/{{ github_repo_name }}
-    --token {{ lookup('env', 'GITHUB_RUNNER_TOKEN') }}
+    --token {{ lookup('env', 'RUNNER_REGISTRATION_TOKEN') }}
     --name {{ github_runner_name }}
     --unattended
   args:

@@ -37,7 +37,7 @@ jobs:
 
       - name: Run Ansible playbook for github-runner
         env:
-          GITHUB_RUNNER_TOKEN: ${{ secrets.GITHUB_RUNNER_TOKEN }}
+          RUNNER_REGISTRATION_TOKEN: ${{ secrets.RUNNER_REGISTRATION_TOKEN }}
         working-directory: ./config-ansible
         run: |
           ansible-playbook -i generated_inventory.ini site.yml --tags github-runner
