@@ -10,5 +10,7 @@ Welcome to the Blithe project documentation. This site contains all the informat
 *   [Self-Hosted Runner](./guides/self-hosted-runner.md)
 *   [Reference](./reference/terraform.md)
 *   [Reference](./reference/ansible.md)
+*   [Traefik Reverse Proxy Guide](./guides/reverse-proxy-with-traefik.md)
+*   [Directory Conventions](./reference/ansible-directory-conventions.md)
 
 <!-- Trigger deployment -->

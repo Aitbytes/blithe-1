@@ -134,6 +134,21 @@
     - role: github-runner
       tags: ['github-runner']
 
+- name: Install "arr" stack
+  hosts: debian003
+  become: yes
+  roles:
+    - role: arr-network
+      tags: ['arr-network', 'sonarr', 'radarr', 'prowlarr', 'qbittorrent']
+    - role: sonarr
+      tags: ['sonarr']
+    - role: radarr
+      tags: ['radarr']
+    - role: prowlarr
+      tags: ['prowlarr']
+    - role: qbittorrent
+      tags: ['qbittorrent']
+
 
 # Fourth play  Configure additional services
 #- name: Configure additional services

@@ -123,3 +123,19 @@ traefik_services:
     domain: anki.{{ hostname }}
     url: "http://anki-container:27701/"
     basic_auth: true
+  - name: sonarr
+    domain: sonarr.{{ hostname }}
+    url: "http://{{ debian003_url }}:8989/"
+    basic_auth: false
+  - name: radarr
+    domain: radarr.{{ hostname }}
+    url: "http://{{ debian003_url }}:7878/"
+    basic_auth: false
+  - name: prowlarr
+    domain: prowlarr.{{ hostname }}
+    url: "http://{{ debian003_url }}:9696/"
+    basic_auth: false
+  - name: qbittorrent
+    domain: qbittorrent.{{ hostname }}
+    url: "http://{{ debian003_url }}:8080/"
+    basic_auth: false
