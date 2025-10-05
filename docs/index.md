@@ -9,3 +9,5 @@ Welcome to the Blithe project documentation. This site contains all the informat
 *   [Guides](./guides/traefik-basic-auth.md)
 *   [Reference](./reference/terraform.md)
 *   [Reference](./reference/ansible.md)
+
+<!-- Trigger deployment -->
