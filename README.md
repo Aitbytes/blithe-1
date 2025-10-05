@@ -1,5 +1,10 @@
 # Blithe-1: Infrastructure as Code for a Personal Server
 
+## Status
+
+![Infrastructure Dry Run](https://github.com/Aitbytes/blithe-1/actions/workflows/dry-run.yaml/badge.svg)
+![Deploy Documentation](https://github.com/Aitbytes/blithe-1/actions/workflows/deploy-docs.yaml/badge.svg)
+
 This repository contains the Infrastructure as Code (IaC) for managing a personal server environment. It uses a combination of Terraform and Ansible to automate the provisioning of cloud resources and the deployment of various containerized services.
 
 ## Overview
@@ -38,9 +43,7 @@ Before you begin, ensure you have the following installed and configured:
 
 ## Documentation
 
-For detailed information on the architecture, setup, and available services, please refer to our full documentation site, which is generated from the `/docs` directory in this repository.
-
-**(Note: The documentation site will be available via GitHub Pages once enabled in the repository settings.)**
+For detailed information on the architecture, setup, and available services, please refer to our full documentation site, which is available at **[https://aitbytes.github.io/blithe-1/](https://aitbytes.github.io/blithe-1/)**.
 
 ## Contributing
 
