@@ -12,6 +12,13 @@
     shell: /bin/bash
     state: present
 
+- name: Add runner user to the docker group
+  ansible.builtin.user:
+    name: "{{ github_runner_user }}"
+    groups: docker
+    append: yes
+
+
 - name: Install dependencies
   ansible.builtin.apt:
     name:
