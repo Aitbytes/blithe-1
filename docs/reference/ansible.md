@@ -1,4 +1,4 @@
-# Ansible Configuration for Blithe Project
+# Ansible Reference
 
 This directory contains the Ansible configuration for setting up and managing the servers provisioned by Terraform.
 
@@ -28,7 +28,7 @@ graph TD
     end
 
     A -- "reads inventory from" --> B
-    A -- "connects to and configures" --> C
+    A -- "connects to and infigures" --> C
     C -- "hosts" --> D
     C -- "hosts" --> E
     C -- "is hardened by" --> F
