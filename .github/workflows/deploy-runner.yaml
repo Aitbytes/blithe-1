@@ -29,7 +29,15 @@ jobs:
         run: |
           echo "VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Run Ansible playbook for github-runner
+      - name: Generate temporary inventory
         working-directory: ./config-ansible
         run: |
-          ansible-playbook site.yml --tags github-runner
+          echo "[debian003]" > generated_inventory.ini
+          echo "debian003 ansible_host=192.168.1.50 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa" >> generated_inventory.ini
+
+      - name: Run Ansible playbook for github-runner
+        env:
+          GITHUB_RUNNER_TOKEN: ${{ secrets.GITHUB_RUNNER_TOKEN }}
+        working-directory: ./config-ansible
+        run: |
+          ansible-playbook -i generated_inventory.ini site.yml --tags github-runner
