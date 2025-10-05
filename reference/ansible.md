@@ -4,7 +4,7 @@ This directory contains the Ansible configuration for setting up and managing th
 
 ## Overview
 
-This Ansible setup is designed to configure the servers created by the Terraform configuration in the `infra-terraform` directory. It uses a role-based structure to organize tasks and deploys various services, including Docker, Traefik, Minio, and an observability stack.
+This Ansible setup is designed to configure the servers created by the Terraform configuration in the `infra-terraform` directory. It uses a role-based structure to organize tasks and deploys various services, including Docker, Traefik, Minio, .
 
 ## Architecture Diagram
 
@@ -23,7 +23,7 @@ graph TD
         D[Docker]
         E[Traefik]
         F[Security Hardening]
-        G[Observability Stack]
+
         H[Other Services]
     end
 
@@ -53,7 +53,7 @@ The `site.yml` playbook is divided into multiple plays, each targeting specific 
 4.  **Service Deployment**: A series of plays that deploy various services, including:
     -   Anki Sync Server
     -   Minio
-    -   Observability Stack (Prometheus, Grafana, etc.)
+
     -   Wordpress
     -   NSD
     -   Copyparty
@@ -72,7 +72,7 @@ The configuration is modularized into the following roles:
 -   `traefik`: Sets up the Traefik reverse proxy.
 -   `anki-sync-server`: Deploys an Anki sync server.
 -   `minio`: Deploys a Minio S3-compatible object storage server.
--   `observability`: Sets up a monitoring stack with Prometheus and Grafana.
+
 -   `wordpress`: Deploys a WordPress instance.
 -   `nsd`: Deploys the NSD authoritative DNS server.
 -   `copyparty`: Deploys a file sharing service.
