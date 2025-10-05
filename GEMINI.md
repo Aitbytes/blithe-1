@@ -23,10 +23,24 @@ We use the GitFlow branching model:
 
 ### Automation (CI/CD)
 
-All changes are validated by GitHub Actions workflows before merging:
+All changes are validated by GitHub Actions workflows before merging.
 
 -   `dry-run.yaml`: Validates Terraform and Ansible changes on pushes/PRs to `develop` and `main`.
 -   `deploy-docs.yaml`: Deploys the documentation site on pushes to `main`.
+
+### **MANDATORY TESTING PROTOCOL**
+
+**ALL CHANGES, WITHOUT EXCEPTION, MUST BE ACCOMPANIED BY A NEW OR UPDATED GITHUB ACTIONS WORKFLOW THAT TESTS THE CHANGE.** This ensures that every feature, fix, or refactor is verifiable and robust. Before committing any workflow changes, you **MUST** test them locally using `act`.
+
+**ALL CHANGES, WITHOUT EXCEPTION, MUST BE ACCOMPANIED BY A NEW OR UPDATED GITHUB ACTIONS WORKFLOW THAT TESTS THE CHANGE.** Before committing any workflow changes, you **MUST** test them locally using `act`.
+
+**Example:**
+
+If you add a new Ansible role named `new-service`, you **MUST** also:
+1.  Create a new workflow file (e.g., `.github/workflows/test-new-service.yaml`).
+2.  This workflow **MUST** contain a job that runs the `new-service` role, likely using tags to isolate it.
+3.  You **MUST** then run `act` locally to prove that the new workflow and the Ansible role work correctly.
+4.  Only after the local `act` run succeeds can you commit the new role and the new workflow.
 
 ### Zero-Trust Secrets Management
 
