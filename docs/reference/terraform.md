@@ -1,4 +1,4 @@
-# Terraform Infrastructure for Blithe Project
+# Terraform Reference
 
 This directory contains the Terraform configuration for provisioning and managing the infrastructure for the Blithe project.
 

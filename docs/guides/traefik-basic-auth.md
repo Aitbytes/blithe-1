@@ -1,27 +1,6 @@
-# Project Progress Tracker
+# Traefik Basic Authentication
 
-## Current Status
-The Traefik Ansible role has been updated to support basic authentication for services.
-
-## Completed Tasks
-- [x] Deconstruct the request into sub-tasks.
-- [x] Read traefik role files.
-- [x] Update `defaults/main.yml` with basic auth variables.
-- [x] Update `templates/dynamic_conf.yml.j2` to create the middleware.
-
-## In Progress
-- [ ] Document how to use the new feature.
-
-## Pending Tasks
--
-
-## Environment Status
-- Bootstrap: [Not Started]
-- Development: [Ansible configuration for local services]
-- Production: [Not applicable]
-
-## Notes
-To enable basic authentication for a service, you need to perform the following steps:
+This guide explains how to enable basic authentication for a service exposed through Traefik.
 
 1.  **Generate `htpasswd` credentials:**
     You can use an online tool or the `htpasswd` command-line utility to generate the user credentials in the required format. For example:
