@@ -1,0 +1,5 @@
+github_runner_user: github-runner
+github_runner_group: github-runner
+github_runner_name: debian003-runner
+github_repo_owner: Aitbytes
+github_repo_name: blithe-1

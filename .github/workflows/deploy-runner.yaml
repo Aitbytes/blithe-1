@@ -1,0 +1,43 @@
+name: Deploy GitHub Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-runner:
+    name: Deploy GitHub Runner
+    runs-on: self-hosted
+    container:
+      image: cytopia/ansible:latest-tools
+
+    env:
+      VAULT_ADDR: https://hashi-vault.aitbytes.fyi
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure SSH keys
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" | base64 -d > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 644 ~/.ssh/id_rsa.pub
+
+      - name: Configure Vault token
+        run: |
+          echo "VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Generate temporary inventory
+        working-directory: ./config-ansible
+        run: |
+          echo "[debian003]" > generated_inventory.ini
+          echo "debian003 ansible_host=192.168.1.50 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa" >> generated_inventory.ini
+
+      - name: Run Ansible playbook for github-runner
+        env:
+          RUNNER_REGISTRATION_TOKEN: ${{ secrets.RUNNER_REGISTRATION_TOKEN }}
+        working-directory: ./config-ansible
+        run: |
+          ansible-playbook -i generated_inventory.ini site.yml --tags github-runner

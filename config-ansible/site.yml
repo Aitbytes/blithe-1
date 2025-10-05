@@ -127,6 +127,13 @@
     - role: watchtower
       tags: ['watchtower']
 
+- name: Install GitHub Runner
+  hosts: debian003
+  become: yes
+  roles:
+    - role: github-runner
+      tags: ['github-runner']
+
 
 # Fourth play  Configure additional services
 #- name: Configure additional services

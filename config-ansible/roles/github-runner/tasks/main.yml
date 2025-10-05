@@ -1,0 +1,81 @@
+---
+- name: Create a group for the GitHub runner
+  ansible.builtin.group:
+    name: "{{ github_runner_group }}"
+    state: present
+
+- name: Create a user for the GitHub runner
+  ansible.builtin.user:
+    name: "{{ github_runner_user }}"
+    group: "{{ github_runner_group }}"
+    home: "/home/{{ github_runner_user }}"
+    shell: /bin/bash
+    state: present
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - tar
+      - jq
+    state: present
+
+- name: Download and install the runner
+  block:
+    - name: Get the latest runner version
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/actions/runner/releases/latest"
+        return_content: yes
+      register: github_runner_latest_release
+
+    - name: Set runner version variable
+      ansible.builtin.set_fact:
+        github_runner_version: "{{ github_runner_latest_release.json.tag_name | replace('v', '') }}"
+
+    - name: Download the runner
+      ansible.builtin.get_url:
+        url: "https://github.com/actions/runner/releases/download/v{{ github_runner_version }}/actions-runner-linux-x64-{{ github_runner_version }}.tar.gz"
+        dest: "/home/{{ github_runner_user }}/actions-runner.tar.gz"
+
+    - name: Create runner directory
+      ansible.builtin.file:
+        path: "/home/{{ github_runner_user }}/actions-runner"
+        state: directory
+        owner: "{{ github_runner_user }}"
+        group: "{{ github_runner_group }}"
+        mode: '0755'
+
+    - name: Extract the runner
+      ansible.builtin.unarchive:
+        src: "/home/{{ github_runner_user }}/actions-runner.tar.gz"
+        dest: "/home/{{ github_runner_user }}/actions-runner"
+        remote_src: yes
+        owner: "{{ github_runner_user }}"
+        group: "{{ github_runner_group }}"
+        creates: "/home/{{ github_runner_user }}/actions-runner/config.sh"
+  become: yes
+  become_user: "{{ github_runner_user }}"
+
+- name: Configure the runner
+  ansible.builtin.command: >
+    ./config.sh --url https://github.com/{{ github_repo_owner }}/{{ github_repo_name }}
+    --token {{ lookup('env', 'RUNNER_REGISTRATION_TOKEN') }}
+    --name {{ github_runner_name }}
+    --unattended
+  args:
+    chdir: "/home/{{ github_runner_user }}/actions-runner"
+    creates: "/home/{{ github_runner_user }}/actions-runner/.runner"
+  become: yes
+  become_user: "{{ github_runner_user }}"
+
+- name: Install the runner service
+  ansible.builtin.template:
+    src: runner.service.j2
+    dest: /etc/systemd/system/actions.runner.service
+  notify: restart runner
+
+- name: Enable and start the runner service
+  ansible.builtin.systemd:
+    name: actions.runner
+    enabled: yes
+    state: started
