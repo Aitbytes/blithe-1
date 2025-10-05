@@ -1,0 +1,8 @@
+---
+- name: Configure Runner
+  hosts: all
+  become: yes
+  roles:
+    - role: github-runner
+      vars:
+        github_runner_token: "{{ vault_github_runner_token }}"
