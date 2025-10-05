@@ -91,6 +91,69 @@
   ufw:
     state: enabled
 
+# Install and configure unattended-upgrades
+- name: Install unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Configure unattended-upgrades
+  template:
+    src: 50unattended-upgrades.j2
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable unattended-upgrades
+  template:
+    src: 20auto-upgrades.j2
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+
+# Install and configure Fail2Ban
+- name: Install Fail2Ban
+  apt:
+    name: fail2ban
+    state: present
+
+- name: Configure Fail2Ban for SSH
+  template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart fail2ban
+
+- name: Ensure Fail2Ban service is enabled and running
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+
+- name: Get latest Fail2Ban logs
+  command: journalctl -u fail2ban -n 50 --no-pager
+  register: fail2ban_logs
+  changed_when: false
+  become: true
+
+- name: Display Fail2Ban logs
+  debug:
+    var: fail2ban_logs.stdout_lines
+
+- name: Get latest unattended-upgrades logs
+  command: tail -n 50 /var/log/unattended-upgrades/unattended-upgrades-dpkg.log
+  register: unattended_upgrades_logs
+  changed_when: false
+  become: true
+
+- name: Display unattended-upgrades logs
+  debug:
+    var: unattended_upgrades_logs.stdout_lines
+
 - name: Unlock admin user account
   command: usermod -U "{{ admin_username }}"
   become: true
