@@ -1,0 +1,15 @@
+name: Test Runner Connectivity
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-connectivity:
+    name: Test connectivity to 192.168.1.10:8006
+    runs-on: self-hosted
+
+    steps:
+      - name: Check for web page on 192.168.1.10:8006
+        run: |
+          echo "Attempting to connect to http://192.168.1.10:8006"
+          curl --fail --silent --show-error http://192.168.1.10:8006
