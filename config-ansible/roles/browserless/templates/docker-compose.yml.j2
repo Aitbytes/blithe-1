@@ -22,7 +22,7 @@ services:
       - "traefik.http.routers.browserless.rule=Host(`browserless.{{ hostname }}`)"
       - "traefik.http.routers.browserless.entrypoints=websecure"
       - "traefik.http.routers.browserless.tls=true"
-      - "traefik.http.routers.browserless.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.browserless.tls.certresolver=cloudflare"
       - "traefik.http.services.browserless.loadbalancer.server.port=3000"
       - com.centurylinklabs.watchtower.enable: "true"
 
