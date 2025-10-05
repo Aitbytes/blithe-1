@@ -25,4 +25,4 @@ jobs:
         env:
           NIXPKGS_ALLOW_UNFREE: 1
         run: |
-          nix-shell --pure --run "echo 'Nix shell is working' && terraform --version && ansible --version && git --version && act --version && trufflehog version"
+          nix-shell --pure --run "echo 'Nix shell is working' && terraform --version && ansible --version && git --version && act --version"
