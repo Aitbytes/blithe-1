@@ -2,6 +2,9 @@ name: Deploy GitHub Runner
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/add-self-hosted-runner
 
 jobs:
   deploy-runner:

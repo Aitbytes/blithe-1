@@ -2,6 +2,9 @@ name: Test Runner Connectivity
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/add-self-hosted-runner
 
 jobs:
   test-connectivity:
