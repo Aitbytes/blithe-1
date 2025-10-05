@@ -1,0 +1,14 @@
+[Unit]
+Description=GitHub Actions Runner ({{ github_repo_owner }}/{{ github_repo_name }})
+After=network.target
+
+[Service]
+User={{ github_runner_user }}
+Group={{ github_runner_group }}
+WorkingDirectory=/home/{{ github_runner_user }}/actions-runner
+ExecStart=/home/{{ github_runner_user }}/actions-runner/run.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
