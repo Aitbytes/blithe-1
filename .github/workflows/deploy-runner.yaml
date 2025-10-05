@@ -6,7 +6,7 @@ on:
 jobs:
   deploy-runner:
     name: Deploy GitHub Runner
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container:
       image: cytopia/ansible:latest-tools
 
