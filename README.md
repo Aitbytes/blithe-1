@@ -17,6 +17,14 @@ The goal of this project is to create a fully automated, reproducible, and secur
 
 ## Getting Started
 
+### Development Environment
+
+This project uses [Nix](https://nixos.org/) to provide a reproducible development environment with all the necessary dependencies. To activate it, install Nix on your system and then run the following command from the project root:
+
+```bash
+nix-shell
+```
+
 ### Prerequisites
 
 Before you begin, ensure you have the following installed and configured:
