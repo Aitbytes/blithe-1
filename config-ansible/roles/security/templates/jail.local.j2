@@ -1,0 +1,13 @@
+[DEFAULT]
+# Ban hosts for one hour:
+bantime = 1h
+
+# Override /etc/fail2ban/jail.d/defaults-debian.conf - ban on all ports, not just one
+banaction = iptables-allports
+# or for iptables:
+# banaction = iptables-multiport
+
+[sshd]
+enabled = true
+port = {{ ssh_port | default('22') }}
+backend = systemd
