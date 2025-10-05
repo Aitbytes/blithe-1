@@ -2,6 +2,16 @@
 
 This guide will walk you through the process of setting up the Blithe project infrastructure.
 
+## Development Environment
+
+For a reproducible development environment, this project uses Nix. To activate it, run the following command from the project root:
+
+```bash
+nix-shell
+```
+
+This will install all the required tools (Terraform, Ansible, etc.) and make them available in your shell.
+
 ## Prerequisites
 
 *   Terraform installed
