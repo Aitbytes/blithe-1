@@ -7,6 +7,7 @@ Welcome to the Blithe project documentation. This site contains all the informat
 *   [Architecture](./architecture.md)
 *   [Getting Started](./getting-started.md)
 *   [Guides](./guides/traefik-basic-auth.md)
+*   [Self-Hosted Runner](./guides/self-hosted-runner.md)
 *   [Reference](./reference/terraform.md)
 *   [Reference](./reference/ansible.md)
 

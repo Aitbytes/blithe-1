@@ -81,6 +81,7 @@ The configuration is modularized into the following roles:
 -   `vault`: Deploys a HashiCorp Vault server.
 -   `adminer`: Deploys a database management tool.
 -   `watchtower`: Deploys Watchtower to automatically update Docker containers.
+-   `github-runner`: Installs and configures a self-hosted GitHub Actions runner.
 
 ## How to Use
 
