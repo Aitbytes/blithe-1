@@ -56,3 +56,22 @@ If you add a new Ansible role named `new-service`, you **MUST** also:
 2.  **Respect the Workflow**: All code changes must follow the GitFlow model via Pull Requests from a `feature` branch into `develop`.
 3.  **Plan Your Work**: For any non-trivial task, create a plan and present it before you start writing code or running commands.
 4.  **Update Documentation**: If your changes affect the architecture, setup, or a user-facing guide, you **must** update the relevant files in the `/docs` directory as part of the same commit or pull request.
+
+## 4. Development Patterns & Lessons
+
+This section codifies lessons learned from past work. Apply these principles to all future tasks.
+
+1.  **Verify Host-Specific Conventions**:
+    *   **Lesson:** Ansible roles in this project have different structures depending on their target host (`aitbytes.fyi` vs. `debian003`).
+    *   **Action:** Before creating or modifying a role, I **must** consult the `docs/reference/ansible-directory-conventions.md` file and replicate the correct pattern for the target host.
+
+2.  **Build True End-to-End Tests**:
+    *   **Lesson:** A simple syntax check (`--check`) is not a sufficient test. A CI workflow must replicate the real deployment environment as closely as possible.
+    *   **Action:** When creating a new test workflow for Ansible, I **must** follow the pattern established in `deploy-runner.yaml` and `test-arr-stack.yaml`. This includes:
+        *   Using a container image with all necessary tools (`cytopia/ansible:latest-tools`).
+        *   Generating a temporary, ad-hoc inventory file that defines the target hosts.
+        *   Securely loading SSH keys and other secrets required for a full, live connection to the test targets.
+
+3.  **Manage Container Permissions Explicitly**:
+    *   **Lesson:** Docker containers running as a non-root user (e.g., UID 1000) do not have automatic write access to host volumes created by Ansible (which runs as `root`).
+    *   **Action:** When an Ansible role creates a directory on the host that will be used as a volume for a container, I **must** add a task to explicitly set the ownership of that directory to match the UID/GID of the user inside the container (e.g., `owner: "1000"`, `group: "1000"`).
