@@ -8,6 +8,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./config:/config
+    ports:
+      - "{{ prowlarr_port }}:9696"
     restart: unless-stopped
     networks:
       - arr-net

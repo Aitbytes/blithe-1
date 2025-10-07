@@ -23,4 +23,5 @@ General improvements and feature additions.
 - [ ] Test the implementation of the "arr" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
 
 ## Pending Tasks
+- [ ] Implement declarative authentication and configuration for the "arr" stack.
 - [ ]
