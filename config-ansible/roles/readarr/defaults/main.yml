@@ -1,0 +1,8 @@
+---
+# Readarr configuration defaults
+readarr_image: "linuxserver/readarr:develop"
+readarr_container_name: "readarr"
+readarr_data_dir: "/data/docker/readarr"
+readarr_port: "8787"
+readarr_books_dir: "/data/media/books"
+readarr_downloads_dir: "/data/media/downloads"

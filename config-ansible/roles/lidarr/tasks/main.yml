@@ -1,0 +1,33 @@
+---
+- name: Create Lidarr directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ lidarr_data_dir }}"
+    - "{{ lidarr_music_dir }}"
+    - "{{ lidarr_downloads_dir }}"
+
+- name: Set media folder permissions for Lidarr
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    recurse: yes
+  loop:
+    - "{{ lidarr_music_dir }}"
+    - "{{ lidarr_downloads_dir }}"
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ lidarr_data_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Lidarr container
+  community.docker.docker_compose_v2:
+    project_src: "{{ lidarr_data_dir }}"
+    state: present
+    pull: missing

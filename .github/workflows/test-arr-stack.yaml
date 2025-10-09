@@ -7,6 +7,8 @@ on:
       - 'config-ansible/roles/radarr/**'
       - 'config-ansible/roles/prowlarr/**'
       - 'config-ansible/roles/qbittorrent/**'
+      - 'config-ansible/roles/lidarr/**'
+      - 'config-ansible/roles/readarr/**'
       - 'config-ansible/site.yml'
       - '.github/workflows/test-arr-stack.yaml'
   workflow_dispatch:
@@ -46,6 +48,6 @@ jobs:
         working-directory: ./config-ansible
         run: |
           ansible-playbook -i generated_inventory.ini site.yml \
-            --tags "sonarr,radarr,prowlarr,qbittorrent,traefik" \
+            --tags "sonarr,radarr,prowlarr,qbittorrent,lidarr,readarr,traefik" \
             -e "vault_token=${VAULT_TOKEN}" \
             -e "vault_url=https://hashi-vault.aitbytes.fyi"

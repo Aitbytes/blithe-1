@@ -131,6 +131,14 @@ traefik_services:
     domain: radarr.{{ hostname }}
     url: "http://{{ debian003_url }}:7878/"
     basic_auth: false
+  - name: lidarr
+    domain: lidarr.{{ hostname }}
+    url: "http://{{ debian003_url }}:8686/"
+    basic_auth: false
+  - name: readarr
+    domain: readarr.{{ hostname }}
+    url: "http://{{ debian003_url }}:8787/"
+    basic_auth: false
   - name: prowlarr
     domain: prowlarr.{{ hostname }}
     url: "http://{{ debian003_url }}:9696/"
