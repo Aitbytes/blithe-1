@@ -139,11 +139,15 @@
   become: yes
   roles:
     - role: arr-network
-      tags: ['arr-network', 'sonarr', 'radarr', 'prowlarr', 'qbittorrent']
+      tags: ['arr-network', 'sonarr', 'radarr', 'prowlarr', 'qbittorrent', 'readarr', 'lidarr' ]
     - role: sonarr
       tags: ['sonarr']
     - role: radarr
       tags: ['radarr']
+    - role: readarr
+      tags: ['readarr']
+    - role: lidarr
+      tags: ['lidarr']
     - role: prowlarr
       tags: ['prowlarr']
     - role: qbittorrent

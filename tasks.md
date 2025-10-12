@@ -18,10 +18,10 @@ General improvements and feature additions.
 - [x] Document Ansible role directory structure conventions.
 
 ## In Progress
-- [x] Complete implementation of the "arr" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
-- [x] Review and refactor "arr" stack implementation to align with host-specific directory conventions.
-- [ ] Test the implementation of the "arr" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
+- [x] Complete implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
+- [x] Review and refactor ""arr"" stack implementation to align with host-specific directory conventions.
+- [ ] Test the implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
 
 ## Pending Tasks
-- [ ] Implement declarative authentication and configuration for the "arr" stack.
+- [ ] Implement declarative authentication and configuration for the ""arr"" stack.
 - [ ]
