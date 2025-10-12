@@ -1,6 +1,6 @@
 ---
 # Readarr configuration defaults
-readarr_image: "linuxserver/readarr:develop"
+readarr_image: "ghcr.io/hotio/readarr:latest"
 readarr_container_name: "readarr"
 readarr_data_dir: "/data/docker/readarr"
 readarr_port: "8787"

@@ -1,6 +1,6 @@
 ---
 # Lidarr configuration defaults
-lidarr_image: "linuxserver/lidarr:latest"
+lidarr_image: "ghcr.io/hotio/lidarr"
 lidarr_container_name: "lidarr"
 lidarr_data_dir: "/data/docker/lidarr"
 lidarr_port: "8686"
