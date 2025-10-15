@@ -124,6 +124,28 @@ The network configuration inside this container reveals a complex setup:
 
 This indicates a nested virtualization setup where the LXC container itself acts as a host for Docker containers.
 
+### 4.4. DNS Resolution Debugging Log
+
+The server experienced a persistent DNS issue where it was unable to resolve external hostnames. The investigation and resolution followed these steps:
+
+1.  **Initial Diagnosis:** A check of `/etc/resolv.conf` revealed that the file was being managed by Tailscale, pointing all DNS queries to its internal nameserver (`100.100.100.100`). This prevented public domain resolution.
+
+2.  **First Mitigation Attempt:** Tailscale's DNS management was disabled using `tailscale up --accept-dns=false`. This caused `/etc/resolv.conf` to revert to a different, incorrect nameserver: `192.168.0.1`.
+
+3.  **Static IP Configuration:** The `/etc/network/interfaces` file was inspected. The primary bridge, `vmbr0`, was missing a `dns-nameservers` directive. The correct directive (`dns-nameservers 192.168.1.1`) was added.
+
+4.  **Network Reload Issues:** An attempt to apply the changes with `ifreload -a` failed due to an error with the unused wireless interface, `wlp7s0`. The configuration block for this interface was removed from `/etc/network/interfaces`.
+
+5.  **Persistent Override:** Even after removing the wireless interface and successfully running `ifreload -a`, `/etc/resolv.conf` still contained the incorrect `192.168.0.1` nameserver.
+
+6.  **Root Cause Discovery:** A process check revealed a rogue `dhclient` process running on the physical interface `enp6s0`, which is part of the `vmbr0` bridge. This DHCP client was obtaining an incorrect DNS server from the network and overriding the static configuration.
+
+7.  **Final Resolution:**
+    *   The active `dhclient` process was terminated.
+    *   Despite this, reloading the network configuration with `ifreload -a` still failed to update `/etc/resolv.conf`, indicating a persistent override from an unidentified source.
+    *   As a final, direct measure, the `/etc/resolv.conf` file was manually overwritten with the correct nameserver using the `echo` command. This successfully resolved the DNS issue.
+    *   **Note:** Making the file immutable with `chattr +i` was considered as a hardening step but was not applied. The `/etc/resolv.conf` file remains mutable.
+
 ## 5. Detailed Storage Configuration
 
 The server utilizes a combination of LVM (Logical Volume Management) and ZFS for storage.
