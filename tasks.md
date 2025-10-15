@@ -1,7 +1,7 @@
 # Project Task Tracker
 
 ## Current Focus
-General improvements and feature additions.
+Install Rancher on Talos Cluster
 
 ## Completed Tasks
 - [x] Consolidate and structure the project documentation.
@@ -38,7 +38,22 @@ General improvements and feature additions.
         -   [x] **Test Deployment**: Create a new, small VM or container and place its disk on the new `rbd-proxmox` storage. Verify it boots and operates correctly.
 
 ## In Progress
-- [ ] Test the implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
+- [ ] **Install Rancher on Talos Cluster**
+    - [ ] **Phase 1: Install Ceph CSI Driver**
+        - [x] Securely store Ceph admin key in Vault.
+        - [x] Install and configure Vault-Kubernetes authentication (`setup-vault-k8s-auth.sh`).
+        - [ ] Add `ceph-csi` Helm repository.
+        - [ ] Create `ceph-csi-rbd` namespace.
+        - [ ] Create `values.yaml` for the `ceph-csi-rbd` chart with Vault integration.
+        - [ ] Install the chart using Helm.
+    - [ ] **Phase 2: Create Default StorageClass**
+        - [ ] Define and apply a `StorageClass` manifest for Ceph RBD.
+        - [ ] Set the new `StorageClass` as the default.
+    - [ ] **Phase 3: Install Rancher**
+        - [ ] Add the Rancher Helm repository.
+        - [ ] Create the `cattle-system` namespace.
+        - [ ] Install Rancher using Helm.
 
 ## Pending Tasks
+- [ ] Test the implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
 - [ ] Implement declarative authentication and configuration for the ""arr"" stack.
