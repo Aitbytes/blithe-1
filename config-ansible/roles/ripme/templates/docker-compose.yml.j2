@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  ripme:
+    image: openjdk:17-slim
+    container_name: ripme
+    entrypoint: java -jar /opt/app/ripme.jar 
+    ports:
+      - "8069:8069"
+    volumes:
+      - "{{ ripme_data_dir }}:/opt/app/"
+      - "/data/media/:/media/"
+    restart: unless-stopped
