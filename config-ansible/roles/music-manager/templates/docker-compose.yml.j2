@@ -1,0 +1,21 @@
+services:
+  {{ music_manager_container_name }}:
+    image: {{ music_manager_image }}
+    container_name: {{ music_manager_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ music_manager_music_dir }}:/music"
+      - "{{ music_manager_downloads_dir }}:/downloads"
+    ports:
+      - "{{ music_manager_port }}:8686"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

@@ -1,0 +1,21 @@
+services:
+  {{ movie_manager_container_name }}:
+    image: {{ movie_manager_image }}
+    container_name: {{ movie_manager_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ movie_manager_movies_dir }}:/movies"
+      - "{{ movie_manager_downloads_dir }}:/downloads"
+    ports:
+      - "{{ movie_manager_port }}:7878"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

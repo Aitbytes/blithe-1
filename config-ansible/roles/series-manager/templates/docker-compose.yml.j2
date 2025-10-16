@@ -1,0 +1,21 @@
+services:
+  {{ series_manager_container_name }}:
+    image: {{ series_manager_image }}
+    container_name: {{ series_manager_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ series_manager_tv_dir }}:/tv"
+      - "{{ series_manager_downloads_dir }}:/downloads"
+    ports:
+      - "{{ series_manager_port }}:8989"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

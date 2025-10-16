@@ -55,5 +55,4 @@ Install Rancher on Talos Cluster
         - [ ] Install Rancher using Helm.
 
 ## Pending Tasks
-- [ ] Test the implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
-- [ ] Implement declarative authentication and configuration for the ""arr"" stack.
+

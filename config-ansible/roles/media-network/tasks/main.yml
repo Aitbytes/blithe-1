@@ -1,0 +1,5 @@
+---
+- name: Create media stack network
+  community.docker.docker_network:
+    name: media-net
+    state: present

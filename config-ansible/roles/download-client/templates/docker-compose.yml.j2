@@ -1,0 +1,23 @@
+services:
+  {{ download_client_container_name }}:
+    image: {{ download_client_image }}
+    container_name: {{ download_client_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT={{ download_client_port }}
+    volumes:
+      - ./config:/config
+      - "{{ download_client_downloads_dir }}:/downloads"
+    ports:
+      - "{{ download_client_port }}:{{ download_client_port }}"
+      - "{{ download_client_torrenting_port }}:{{ download_client_torrenting_port }}"
+      - "{{ download_client_torrenting_port }}:{{ download_client_torrenting_port }}/udp"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

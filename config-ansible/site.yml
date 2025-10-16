@@ -118,12 +118,12 @@
     - role: adminer
       tags: ['adminer']
 
-- name: Install RipMe
+- name: Install Image Archiver
   hosts: debian003
   become: yes
   roles:
-    - role: ripme
-      tags: ['ripme']
+    - role: image-archiver
+      tags: ['image-archiver']
 
 - name: Install Watchtower
   hosts: aitbytes.fyi
@@ -141,24 +141,24 @@
     - role: github-runner
       tags: ['github-runner']
 
-- name: Install "arr" stack
+- name: Install Media Stack
   hosts: debian003
   become: yes
   roles:
-    - role: arr-network
-      tags: ['arr-network', 'sonarr', 'radarr', 'prowlarr', 'qbittorrent', 'readarr', 'lidarr' ]
-    - role: sonarr
-      tags: ['sonarr']
-    - role: radarr
-      tags: ['radarr']
-    - role: readarr
-      tags: ['readarr']
-    - role: lidarr
-      tags: ['lidarr']
-    - role: prowlarr
-      tags: ['prowlarr']
-    - role: qbittorrent
-      tags: ['qbittorrent']
+    - role: media-network
+      tags: ['media-network', 'series-manager', 'movie-manager', 'indexer-manager', 'download-client', 'book-manager', 'music-manager' ]
+    - role: series-manager
+      tags: ['series-manager']
+    - role: movie-manager
+      tags: ['movie-manager']
+    - role: book-manager
+      tags: ['book-manager']
+    - role: music-manager
+      tags: ['music-manager']
+    - role: indexer-manager
+      tags: ['indexer-manager']
+    - role: download-client
+      tags: ['download-client']
 
 
 # Fourth play  Configure additional services

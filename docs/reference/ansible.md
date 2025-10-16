@@ -82,11 +82,11 @@ The configuration is modularized into the following roles:
 -   `adminer`: Deploys a database management tool.
 -   `watchtower`: Deploys Watchtower to automatically update Docker containers.
 -   `github-runner`: Installs and configures a self-hosted GitHub Actions runner.
--   `prowlarr`: Deploys Prowlarr for managing indexers.
--   `qbittorrent`: Deploys qBittorrent, a torrent client.
--   `radarr`: Deploys Radarr for managing movies.
--   `sonarr`: Deploys Sonarr for managing TV shows.
--   `arr-network`: Creates a shared network for the "arr" stack.
+-   `indexer-manager`: Deploys an indexer manager.
+-   `download-client`: Deploys a torrent client.
+-   `movie-manager`: Deploys a movie manager.
+-   `series-manager`: Deploys a series manager.
+-   `media-network`: Creates a shared network for the media stack.
 
 ## How to Use
 

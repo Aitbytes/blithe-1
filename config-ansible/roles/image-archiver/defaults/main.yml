@@ -1,0 +1,7 @@
+---
+# Image Archiver configuration defaults
+image_archiver_image: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/image-archiver/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.image }}"
+image_archiver_container_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/image-archiver/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.container_name }}"
+image_archiver_data_dir: "/data/docker/{{ image_archiver_container_name }}"
+image_archiver_jar_url: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/image-archiver/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.jar_url }}"
+image_archiver_jar_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/image-archiver/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.jar_name }}"

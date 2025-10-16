@@ -1,0 +1,34 @@
+---
+- name: Create Series Manager directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ series_manager_data_dir }}"
+    - "{{ series_manager_tv_dir }}"
+    - "{{ series_manager_downloads_dir }}"
+
+- name: Set media folder permissions for Series Manager
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    recurse: yes
+  loop:
+    - "{{ series_manager_tv_dir }}"
+    - "{{ series_manager_downloads_dir }}"
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ series_manager_data_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Series Manager container
+  community.docker.docker_compose_v2:
+    project_src: "{{ series_manager_data_dir }}"
+    project_name: "{{ series_manager_container_name }}"
+    state: present
+    pull: missing
