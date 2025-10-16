@@ -1,0 +1,8 @@
+---
+# Download Client configuration defaults
+download_client_image: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/download-client/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.image }}"
+download_client_container_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/download-client/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.container_name }}"
+download_client_data_dir: "/data/docker/{{ download_client_container_name }}"
+download_client_port: "8080"
+download_client_downloads_dir: "/data/media/downloads"
+download_client_torrenting_port: "6881"

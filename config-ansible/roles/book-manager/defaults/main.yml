@@ -1,0 +1,8 @@
+---
+# Book Manager configuration defaults
+book_manager_image: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/book-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.image }}"
+book_manager_container_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/book-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.container_name }}"
+book_manager_data_dir: "/data/docker/{{ book_manager_container_name }}"
+book_manager_port: "8787"
+book_manager_books_dir: "/data/media/books"
+book_manager_downloads_dir: "/data/media/downloads"

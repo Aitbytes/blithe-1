@@ -1,0 +1,19 @@
+---
+- name: Create Indexer Manager directories
+  ansible.builtin.file:
+    path: "{{ indexer_manager_data_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ indexer_manager_data_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Indexer Manager container
+  community.docker.docker_compose_v2:
+    project_src: "{{ indexer_manager_data_dir }}"
+    project_name: "{{ indexer_manager_container_name }}"
+    state: present
+    pull: missing

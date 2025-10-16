@@ -1,0 +1,21 @@
+services:
+  {{ book_manager_container_name }}:
+    image: {{ book_manager_image }}
+    container_name: {{ book_manager_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ book_manager_books_dir }}:/books"
+      - "{{ book_manager_downloads_dir }}:/downloads"
+    ports:
+      - "{{ book_manager_port }}:8787"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

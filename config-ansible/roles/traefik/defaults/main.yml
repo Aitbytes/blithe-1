@@ -123,27 +123,27 @@ traefik_services:
     domain: anki.{{ hostname }}
     url: "http://anki-container:27701/"
     basic_auth: true
-  - name: sonarr
-    domain: sonarr.{{ hostname }}
+  - name: series-manager
+    domain: series.{{ hostname }}
     url: "http://{{ debian003_url }}:8989/"
     basic_auth: false
-  - name: radarr
-    domain: radarr.{{ hostname }}
+  - name: movie-manager
+    domain: movies.{{ hostname }}
     url: "http://{{ debian003_url }}:7878/"
     basic_auth: false
-  - name: lidarr
-    domain: lidarr.{{ hostname }}
+  - name: music-manager
+    domain: music.{{ hostname }}
     url: "http://{{ debian003_url }}:8686/"
     basic_auth: false
-  - name: readarr
-    domain: readarr.{{ hostname }}
+  - name: book-manager
+    domain: books.{{ hostname }}
     url: "http://{{ debian003_url }}:8787/"
     basic_auth: false
-  - name: prowlarr
-    domain: prowlarr.{{ hostname }}
+  - name: indexer-manager
+    domain: indexer.{{ hostname }}
     url: "http://{{ debian003_url }}:9696/"
     basic_auth: false
-  - name: qbittorrent
-    domain: qbittorrent.{{ hostname }}
+  - name: download-client
+    domain: downloader.{{ hostname }}
     url: "http://{{ debian003_url }}:8080/"
     basic_auth: false

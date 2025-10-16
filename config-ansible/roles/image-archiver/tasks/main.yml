@@ -1,0 +1,22 @@
+---
+- name: Create Image Archiver data directory
+  ansible.builtin.file:
+    path: "{{ image_archiver_data_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download Image Archiver jar
+  ansible.builtin.get_url:
+    url: "{{ image_archiver_jar_url }}"
+    dest: "{{ image_archiver_data_dir }}/{{ image_archiver_jar_name }}"
+    mode: '0644'
+
+- name: Template docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ image_archiver_data_dir }}/docker-compose.yml"
+
+- name: Deploy Image Archiver container
+  community.docker.docker_compose_v2:
+    project_src: "{{ image_archiver_data_dir }}"
+    project_name: "{{ image_archiver_container_name }}"

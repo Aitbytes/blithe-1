@@ -1,0 +1,34 @@
+---
+- name: Create Movie Manager directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ movie_manager_data_dir }}"
+    - "{{ movie_manager_movies_dir }}"
+    - "{{ movie_manager_downloads_dir }}"
+
+- name: Set media folder permissions for Movie Manager
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    recurse: yes
+  loop:
+    - "{{ movie_manager_movies_dir }}"
+    - "{{ movie_manager_downloads_dir }}"
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ movie_manager_data_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Movie Manager container
+  community.docker.docker_compose_v2:
+    project_src: "{{ movie_manager_data_dir }}"
+    project_name: "{{ movie_manager_container_name }}"
+    state: present
+    pull: missing

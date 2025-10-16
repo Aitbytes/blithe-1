@@ -1,0 +1,8 @@
+---
+# Series Manager configuration defaults
+series_manager_image: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/series-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.image }}"
+series_manager_container_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/series-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.container_name }}"
+series_manager_data_dir: "/data/docker/{{ series_manager_container_name }}"
+series_manager_port: "8989"
+series_manager_tv_dir: "/data/media/tv"
+series_manager_downloads_dir: "/data/media/downloads"

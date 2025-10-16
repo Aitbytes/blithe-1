@@ -1,0 +1,19 @@
+services:
+  {{ indexer_manager_container_name }}:
+    image: {{ indexer_manager_image }}
+    container_name: {{ indexer_manager_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+    ports:
+      - "{{ indexer_manager_port }}:9696"
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    external: true

@@ -38,6 +38,17 @@ Install Rancher on Talos Cluster
         -   [x] **Test Deployment**: Create a new, small VM or container and place its disk on the new `rbd-proxmox` storage. Verify it boots and operates correctly.
 
 ## In Progress
+## Completed Tasks
+- [x] **Obfuscate Media Stack**
+    - [x] Rename Ansible roles (`arr-network` -> `media-network`, `sonarr` -> `series-manager`, etc.).
+    - [x] Update `config-ansible/site.yml` with new role names and tags.
+    - [x] Update `config-ansible/roles/traefik/defaults/main.yml` to use obfuscated service names.
+    - [x] Rename and update `.github/workflows/test-arr-stack.yaml` to `.github/workflows/test-media-stack.yaml`.
+    - [x] Rename and update `docs/guides/arr-stack.md` to `docs/guides/media-stack.md`.
+    - [x] Update `docs/architecture.md` and `docs/reference/ansible.md` to remove "arr stack" references.
+    - [x] Modify Ansible roles to fetch container image names from Vault.
+    - [x] Implement declarative authentication and configuration for the media stack.
+    - [x] Test the implementation of the obfuscated media stack.
 - [ ] **Install Rancher on Talos Cluster**
     - [ ] **Phase 1: Install Ceph CSI Driver**
         - [x] Securely store Ceph admin key in Vault.
@@ -55,5 +66,4 @@ Install Rancher on Talos Cluster
         - [ ] Install Rancher using Helm.
 
 ## Pending Tasks
-- [ ] Test the implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
-- [ ] Implement declarative authentication and configuration for the ""arr"" stack.
+

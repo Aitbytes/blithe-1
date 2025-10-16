@@ -1,0 +1,8 @@
+---
+# Movie Manager configuration defaults
+movie_manager_image: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/movie-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.image }}"
+movie_manager_container_name: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/config-ansible/roles/movie-manager/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.container_name }}"
+movie_manager_data_dir: "/data/docker/{{ movie_manager_container_name }}"
+movie_manager_port: "7878"
+movie_manager_movies_dir: "/data/media/movies"
+movie_manager_downloads_dir: "/data/media/downloads"

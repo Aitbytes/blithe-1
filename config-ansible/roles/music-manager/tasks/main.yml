@@ -1,0 +1,34 @@
+---
+- name: Create Music Manager directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ music_manager_data_dir }}"
+    - "{{ music_manager_music_dir }}"
+    - "{{ music_manager_downloads_dir }}"
+
+- name: Set media folder permissions for Music Manager
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    recurse: yes
+  loop:
+    - "{{ music_manager_music_dir }}"
+    - "{{ music_manager_downloads_dir }}"
+
+- name: Template Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ music_manager_data_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Deploy Music Manager container
+  community.docker.docker_compose_v2:
+    project_src: "{{ music_manager_data_dir }}"
+    project_name: "{{ music_manager_container_name }}"
+    state: present
+    pull: missing
