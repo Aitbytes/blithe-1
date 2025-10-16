@@ -118,6 +118,13 @@
     - role: adminer
       tags: ['adminer']
 
+- name: Install RipMe
+  hosts: debian003
+  become: yes
+  roles:
+    - role: ripme
+      tags: ['ripme']
+
 - name: Install Watchtower
   hosts: aitbytes.fyi
   become: yes
