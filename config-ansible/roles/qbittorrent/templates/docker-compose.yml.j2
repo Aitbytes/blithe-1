@@ -1,0 +1,23 @@
+services:
+  qbittorrent:
+    image: {{ qbittorrent_image }}
+    container_name: {{ qbittorrent_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT={{ qbittorrent_port }}
+    volumes:
+      - ./config:/config
+      - "{{ qbittorrent_downloads_dir }}:/downloads"
+    ports:
+      - "{{ qbittorrent_port }}:{{ qbittorrent_port }}"
+      - "{{ qbittorrent_torrenting_port }}:{{ qbittorrent_torrenting_port }}"
+      - "{{ qbittorrent_torrenting_port }}:{{ qbittorrent_torrenting_port }}/udp"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true

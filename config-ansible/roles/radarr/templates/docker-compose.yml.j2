@@ -1,0 +1,21 @@
+services:
+  radarr:
+    image: {{ radarr_image }}
+    container_name: {{ radarr_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ radarr_movies_dir }}:/movies"
+      - "{{ radarr_downloads_dir }}:/downloads"
+    ports:
+      - "{{ radarr_port }}:7878"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true

@@ -1,0 +1,8 @@
+---
+# Lidarr configuration defaults
+lidarr_image: "ghcr.io/hotio/lidarr"
+lidarr_container_name: "lidarr"
+lidarr_data_dir: "/data/docker/lidarr"
+lidarr_port: "8686"
+lidarr_music_dir: "/data/media/music"
+lidarr_downloads_dir: "/data/media/downloads"

@@ -1,0 +1,53 @@
+name: Test "arr" Stack Deployment
+
+on:
+  pull_request:
+    paths:
+      - 'config-ansible/roles/sonarr/**'
+      - 'config-ansible/roles/radarr/**'
+      - 'config-ansible/roles/prowlarr/**'
+      - 'config-ansible/roles/qbittorrent/**'
+      - 'config-ansible/roles/lidarr/**'
+      - 'config-ansible/roles/readarr/**'
+      - 'config-ansible/site.yml'
+      - '.github/workflows/test-arr-stack.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy-and-test:
+    runs-on: self-hosted
+    container:
+      image: cytopia/ansible:latest-tools
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Generate temporary inventory
+        working-directory: ./config-ansible
+        run: |
+          echo "[all:vars]" > generated_inventory.ini
+          echo "ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'" >> generated_inventory.ini
+          echo "" >> generated_inventory.ini
+          echo "[debian003]" >> generated_inventory.ini
+          echo "debian003 ansible_host=192.168.1.50 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa" >> generated_inventory.ini
+          echo "" >> generated_inventory.ini
+          echo "[aitbytes]" >> generated_inventory.ini
+          echo "aitbytes.fyi ansible_host=128.140.75.3 ansible_user=adminuser ansible_ssh_private_key_file=~/.ssh/id_rsa" >> generated_inventory.ini
+
+      - name: Run Ansible playbook for "arr" stack and Traefik
+        env:
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+        working-directory: ./config-ansible
+        run: |
+          ansible-playbook -i generated_inventory.ini site.yml \
+            --tags "sonarr,radarr,prowlarr,qbittorrent,lidarr,readarr,traefik" \
+            -e "vault_token=${VAULT_TOKEN}" \
+            -e "vault_url=https://hashi-vault.aitbytes.fyi"

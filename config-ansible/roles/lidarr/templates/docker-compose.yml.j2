@@ -1,0 +1,21 @@
+services:
+  lidarr:
+    image: {{ lidarr_image }}
+    container_name: {{ lidarr_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ lidarr_music_dir }}:/music"
+      - "{{ lidarr_downloads_dir }}:/downloads"
+    ports:
+      - "{{ lidarr_port }}:8686"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true

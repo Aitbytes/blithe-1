@@ -1,0 +1,21 @@
+services:
+  readarr:
+    image: {{ readarr_image }}
+    container_name: {{ readarr_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+      - "{{ readarr_books_dir }}:/books"
+      - "{{ readarr_downloads_dir }}:/downloads"
+    ports:
+      - "{{ readarr_port }}:8787"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true

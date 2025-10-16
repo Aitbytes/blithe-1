@@ -1,0 +1,19 @@
+services:
+  prowlarr:
+    image: {{ prowlarr_image }}
+    container_name: {{ prowlarr_container_name }}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+    ports:
+      - "{{ prowlarr_port }}:9696"
+    restart: unless-stopped
+    networks:
+      - arr-net
+
+networks:
+  arr-net:
+    external: true
