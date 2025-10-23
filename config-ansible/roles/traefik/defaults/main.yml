@@ -93,7 +93,11 @@ traefik_services:
     basic_auth: false
   - name: s3
     domain: s3.{{ hostname }}
-    url: "http://seaweedfs-s3:8333/"
+    url: "http://minio:9000/"
+    basic_auth: false
+  - name: minio
+    domain: minio.{{ hostname }}
+    url: "http://minio:9001/"
     basic_auth: false
   - name: hashi-vault
     domain: hashi-vault.{{ hostname }}

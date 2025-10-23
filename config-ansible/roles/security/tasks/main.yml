@@ -1,5 +1,15 @@
 ---
 
+- name: Allow '{{ admin_username }}' to use sudo without a password
+  lineinfile:
+    path: "/etc/sudoers.d/90-{{ admin_username }}"
+    line: "{{ admin_username }} ALL=(ALL) NOPASSWD:ALL"
+    create: yes
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'
+
 - name: Ensure sudo group can sudo without password
   lineinfile:
     path: /etc/sudoers
