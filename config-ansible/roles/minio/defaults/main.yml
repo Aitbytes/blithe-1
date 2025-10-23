@@ -10,3 +10,7 @@ minio_config_dir: "{{ docker_base_dir }}/config/minio"
 
 minio_azeon_user: "azeon"
 minio_azeon_bucket: "azeon"
+
+# Terraform backend user
+minio_terraform_user: "terraform"
+minio_terraform_bucket: "terraform-backends"

@@ -14,9 +14,9 @@ variable "control_nodes" {
   description = "Map of talos control node names to proxmox node names"
   type        = map(string)
   default = {
-    "cp-Kondeas" = "zsus-pve"
-    "cp-Papadides" = "zsus-pve"
-    "cp-Andreadelis" = "zsus-pve"
+    "m-1-kondeas" = "zsus-pve"
+    "m-2-papadides" = "zsus-pve"
+    "m-3-andreadelis" = "zsus-pve"
   }
 }
 
@@ -24,9 +24,9 @@ variable "worker_nodes" {
   description = "Map of talos worker node names to proxmox node names"
   type        = map(string)
   default = {
-    "w-Aggelos" = "zsus-pve"
-    "w-Vassilios" = "zsus-pve"
-    "w-Fotis" = "zsus-pve"
+    "w-1-aggelos" = "zsus-pve"
+    "w-2-vassilios" = "zsus-pve"
+    "w-3-fotis" = "zsus-pve"
   }
 }
 
