@@ -1,0 +1,3 @@
+[submodule "config-ansible/plugins/connection"]
+	path = config-ansible/plugins/connection
+	url = https://github.com/jbrubake/ansible-pct-ssh.git
