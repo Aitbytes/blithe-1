@@ -1,0 +1,13 @@
+[dns]
+upstreams = [
+    "8.8.8.8",
+    "8.8.4.4"
+]
+[dhcp]
+active = true
+start = "{{ pihole_dhcp_settings.range_start }}"
+end = "{{ pihole_dhcp_settings.range_end }}"
+router = "{{ pihole_dhcp_settings.router }}"
+leaseTime = "{{ pihole_dhcp_settings.lease_time }}"
+interface = "{{ pihole_dhcp_settings.interface }}"
+

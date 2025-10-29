@@ -1,4 +1,4 @@
 ---
 # Default directory for Docker files
 docker_base_dir: /srv/docker
-
+docker_architecture: amd64

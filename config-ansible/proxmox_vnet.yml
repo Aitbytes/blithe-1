@@ -1,7 +1,21 @@
 ---
-- name: Deploy Proxmox Virtual Network
-  hosts: network_appliances
-  become: yes
+- name: Configure Pi-hole Appliance
+  hosts: pihole_servers
+  become: true
+  roles:
+    - role: router
+      tags: router
+    - role: docker
+      tags: docker
+    - role: network-appliance
+      tags: network-appliance
+
+- name: Configure Traefik Appliance
+  hosts: traefik_servers
+  become: true
   roles:
     - role: docker
+      tags: docker
+    - role: traefik-internal
+      tags: traefik-internal
 

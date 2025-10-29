@@ -1,0 +1,13 @@
+---
+- name: restart systemd-networkd
+  service:
+    name: systemd-networkd
+    state: restarted
+
+- name: restart pihole
+  community.docker.docker_compose_v2:
+    project_src: "{{ pihole_data_path }}"
+    files:
+      - docker-compose.yml
+    state: present
+    recreate: always

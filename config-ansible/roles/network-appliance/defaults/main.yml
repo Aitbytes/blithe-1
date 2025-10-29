@@ -1,0 +1,34 @@
+---
+# defaults file for network-appliance role
+
+# Traefik settings
+traefik_image: "traefik:v2.10"
+traefik_container_name: "traefik"
+traefik_config_path: "/etc/traefik"
+traefik_log_path: "/var/log/traefik"
+traefik_acme_path: "/etc/traefik/acme"
+traefik_data_path: "/opt/containers/traefik"
+
+# Pi-hole settings
+
+pihole_image: "pihole/pihole:latest"
+
+pihole_container_name: "pihole"
+
+pihole_data_path: "/opt/containers/pihole"
+
+pihole_vault_secret_path: "kv/blithe/network-appliance"
+
+# DHCP settings for the net0 virtual network
+pihole_dhcp_settings:
+  range_start: "10.0.0.100"
+  range_end: "10.0.0.200"
+  router: "10.0.0.2"
+  interface: "net0"
+  lease_time: "24h"
+
+
+
+
+
+

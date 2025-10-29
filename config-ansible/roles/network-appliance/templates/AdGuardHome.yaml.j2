@@ -1,0 +1,105 @@
+{% set upstream_servers = ["1.1.1.1", "8.8.8.8"] %}
+{% set bootstrap_servers = ["1.1.1.1", "1.0.0.1", "8.8.8.8", "8.8.4.4"] %}
+bind_host: 0.0.0.0
+bind_port: 3000
+users:
+  - name: admin
+    password: "{{ vault_adguard_password | password_hash('bcrypt') }}"
+log:
+  file: ""
+dns:
+  bind_hosts:
+    - 0.0.0.0
+  port: 53
+  blocking_mode: nxdomain
+  querylog_enabled: true
+  ratelimit: 20
+  cache_size: 4194304
+  cache_ttl_min: 0
+  cache_ttl_max: 0
+  cache_optimistic: false
+  bogus_nxdomain:
+    - 127.0.0.1
+    - ::1
+  aaaa_disabled: false
+  enable_dnssec: false
+  edns_client_subnet:
+    enabled: false
+    use_custom: false
+    custom_ip: ""
+  max_goroutines: 300
+  handle_ddr: false
+  ipset: []
+  all_servers: false
+  allowed_clients: []
+  disallowed_clients: []
+  blocked_hosts: []
+  resolver_enabled: false
+  serve_plain_dns: true
+  serve_https: true
+  serve_tls: true
+  serve_quic: true
+  serve_dnscrypt: true
+  dnscrypt_config_file: ""
+  use_private_ptr_resolvers: true
+  local_ptr_upstreams: []
+  use_dns64: false
+  dns64_prefixes: []
+  use_http3_upstreams: false
+  use_xtls_upstreams: false
+  use_hosts_file: true
+  hosts_file: ""
+  exclude_default_hosts: true
+  parental_block_host: "family-block.dns.adguard.com"
+  safebrowsing_block_host: "standard-block.dns.adguard.com"
+  safesearch_block_host: "standard-search.dns.adguard.com"
+  rewrites:
+    - domain: traefik.local
+      answer: 10.0.0.2
+  blocked_services: []
+filtering:
+  enabled: true
+  update_interval: 24
+  filters:
+    - id: 1
+      url: https://adguardteam.github.io/AdGuardSDNSFilter/filters/filter.txt
+      name: AdGuard DNS filter
+      enabled: true
+dhcp:
+  enabled: false
+  interface_name: ""
+  gateway_ip: ""
+  subnet_mask: ""
+  range_start: ""
+  range_end: ""
+  lease_duration: 86400
+  icmp_timeout_msec: 1000
+  options: []
+tls:
+  enabled: false
+  server_name: ""
+  force_https: false
+  port_https: 443
+  port_tls: 853
+  port_quic: 853
+  certificate_chain: ""
+  private_key: ""
+  certificate_path: ""
+  private_key_path: ""
+querylog:
+  enabled: true
+  file: ""
+  interval: 2160h
+  anonymize_client_ip: false
+  ignored: []
+statistics:
+  enabled: true
+  interval: 24h
+  ignored: []
+parental:
+  enabled: false
+  sensitivity: 0
+safesearch:
+  enabled: false
+safebrowsing:
+  enabled: false

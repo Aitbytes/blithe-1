@@ -1,0 +1,45 @@
+---
+- name: Create Pi-hole directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: '0755'
+  loop:
+    - "{{ pihole_data_path }}"
+    - "{{ pihole_data_path }}/pihole"
+    - "{{ pihole_data_path }}/dnsmasq.d"
+
+- name: Template Pi-hole configuration
+  template:
+    src: pihole.toml.j2
+    dest: "{{ pihole_data_path }}/pihole.toml"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  notify: restart pihole
+
+- name: Create custom DNS records
+  template:
+    src: 02-custom.conf.j2
+    dest: "{{ pihole_data_path }}/dnsmasq.d/02-custom.conf"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+- name: Template Docker Compose file for Pi-hole
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ pihole_data_path }}/docker-compose.yml"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+- name: Deploy Pi-hole container
+  community.docker.docker_compose_v2:
+    project_src: "{{ pihole_data_path }}"
+    files:
+      - docker-compose.yml
+    state: present
+  notify: restart pihole

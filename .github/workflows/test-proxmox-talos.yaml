@@ -6,7 +6,7 @@ name: Test Proxmox Talos Module
 on:
   pull_request:
     paths:
-      - 'infra-terraform/proxmox/**'
+      - 'infra-terraform/talos-over-proxmox/**'
 
 jobs:
   test-proxmox-talos:
@@ -23,15 +23,29 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: infra-terraform/proxmox
+        working-directory: infra-terraform/talos-over-proxmox
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: infra-terraform/proxmox
+        working-directory: infra-terraform/talos-over-proxmox
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        working-directory: infra-terraform/talos-over-proxmox
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

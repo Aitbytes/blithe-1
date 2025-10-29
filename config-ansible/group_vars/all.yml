@@ -23,4 +23,6 @@ copyparty_cloud_web_port: 3923
 vault_anki_sync_server_user: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/docker/anki-sync-server', headers={'X-Vault-Token': vault_token}) | from_json).data.data.user }}"
 vault_anki_sync_server_password: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/docker/anki-sync-server', headers={'X-Vault-Token': vault_token}) | from_json).data.data.password }}"
 
+vault_pihole_password: "{{ (lookup('url', vault_url + '/v1/kv/data/blithe/network-appliance', headers={'X-Vault-Token': vault_token}) | from_json).data.data.adguard_password }}"
+
 

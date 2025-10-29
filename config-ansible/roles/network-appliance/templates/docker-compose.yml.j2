@@ -1,0 +1,14 @@
+services:
+  pihole:
+    image: "{{ pihole_image }}"
+    container_name: "{{ pihole_container_name }}"
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      TZ: "Europe/London"
+    volumes:
+      - "{{ pihole_data_path }}/pihole:/etc/pihole"
+      - "{{ pihole_data_path }}/dnsmasq.d:/etc/dnsmasq.d"
+      - "{{ pihole_data_path }}/pihole.toml:/etc/pihole/pihole.toml"
+    cap_add:
+      - NET_ADMIN
