@@ -17,7 +17,7 @@ jobs:
   deploy-and-test:
     runs-on: self-hosted
     container:
-      image: cytopia/ansible:latest-tools
+      image: ghcr.io/aitbytes/ansible:latest
 
     steps:
       - name: Checkout

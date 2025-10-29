@@ -11,7 +11,7 @@ jobs:
     name: Deploy GitHub Runner
     runs-on: self-hosted
     container:
-      image: cytopia/ansible:latest-tools
+      image: ghcr.io/aitbytes/ansible:latest
 
     env:
       VAULT_ADDR: https://hashi-vault.aitbytes.fyi

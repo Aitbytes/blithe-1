@@ -47,7 +47,7 @@ jobs:
     needs: tofu-plan
     runs-on: ubuntu-latest
     container:
-      image: cytopia/ansible:latest-tools
+      image: ghcr.io/aitbytes/ansible:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
