@@ -1,0 +1,7 @@
+---
+- name: Deploy Proxmox Virtual Network
+  hosts: network_appliances
+  become: yes
+  roles:
+    - role: docker
+

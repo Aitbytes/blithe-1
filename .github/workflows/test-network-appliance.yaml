@@ -1,0 +1,35 @@
+name: Test Network Appliance Role
+
+on:
+  pull_request:
+    paths:
+      - 'config-ansible/roles/network-appliance/**'
+      - 'config-ansible/roles/docker/**'
+      - 'config-ansible/proxmox_vnet.yml'
+      - 'config-ansible/dynamic_inventory.py'
+
+jobs:
+  test-network-appliance:
+    name: Test Network Appliance Role
+    runs-on: self-hosted
+    container:
+      image: ghcr.io/aitbytes/ansible:latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure SSH keys
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Run Ansible playbook
+        working-directory: ./config-ansible
+        env:
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          ANSIBLE_SSH_ARGS: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+        run: |
+          ansible-playbook -i dynamic_inventory.py proxmox_vnet.yml

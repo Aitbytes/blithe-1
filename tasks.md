@@ -1,58 +1,38 @@
 # Project Task Tracker
 
 ## Current Focus
-Install Rancher on Talos Cluster
+Integrate Dynamic Inventory into CI/CD Workflow
 
 ## Completed Tasks
-- [x] Consolidate and structure the project documentation.
-- [x] Add Nix environment for reproducible development.
-- [x] Add self-hosted GitHub Actions runner.
-- [x] Scaffolding for Sonarr, Radarr, Prowlarr, and qBittorrent roles.
-- [x] Initial implementation of the Prowlarr role (defaults, docker-compose).
-- [x] Document Ansible role directory structure conventions.
-- [x] Complete implementation of the ""arr"" stack (Sonarr, Radarr, Prowlarr, qBittorrent).
-- [x] Review and refactor ""arr"" stack implementation to align with host-specific directory conventions.
-- [x] **Experiment: Create a Single-Node Ceph Cluster on `zsus-pve`**
-    -   **Phase 1: Prerequisites & Safety Checks**
-        -   [x] **Verify ZFS Pool Health**: Connect to `zsus-pve` and run `zpool status Alpha-Aegialeus`. Confirm the pool is `ONLINE` and not degraded or resilvering before proceeding.
-    -   **Phase 2: Network Configuration (Ceph Cluster Network)**
-        -   [x] **Define Cluster Network**: We will use the `private0` bridge for a dedicated, isolated cluster network.
-        -   [x] **Assign IP Address**: Edit `/etc/network/interfaces` on `zsus-pve` to add a static IP to the `private0` interface (e.g., `address 10.10.10.10/24`).
-        -   [x] **Apply Network Changes**: Reload the network configuration using `ifreload -a` or by rebooting the node.
-    -   **Phase 3: Storage Partitioning**
-        -   [x] **Connect to Host**: SSH into `zsus-pve`.
-        -   [x] **Partition `/dev/sda`**: Use `parted /dev/sda` to create a new 100GB partition in the unallocated space.
-        -   [x] **Partition `/dev/sdc`**: Use `parted /dev/sdc` to create a new 100GB partition in the unallocated space.
-        -   [x] **Verify Partitions**: Note the names of the new partitions (e.g., `/dev/sda4`, `/dev/sdc2`).
-    -   **Phase 4: Ceph Installation & Initialization**
-        -   [x] **Install Ceph**: From the Proxmox GUI (or `pveceph install`), install the Ceph Quincy packages.
-        -   [x] **Initialize Cluster**: Initialize the cluster from the shell: `pveceph init --network 10.10.10.0/24`.
-        -   [x] **Create OSDs**: Create one Object Storage Daemon (OSD) on each new partition:
-            -   `pveceph osd create /dev/sdaX` (replace X with the correct partition number)
-            -   `pveceph osd create /dev/sdcY` (replace Y with the correct partition number)
-    -   **Phase 5: Proxmox Integration**
-        -   [x] **Create Ceph Pool**: Create a new pool for VM disks. For a single-node, 2-OSD setup, the replica size must be 2: `pveceph pool create rbd-proxmox --size 2 --min_size 1`.
-        -   [x] **Add Storage to Proxmox**: From the Proxmox GUI, go to `Datacenter -> Storage -> Add` and select `RBD`. Choose the `rbd-proxmox` pool.
-    -   **Phase 6: Verification**
-        -   [x] **Check Health**: Run `ceph -s` and verify the cluster is in a `HEALTH_OK` state.
-        -   [x] **Test Deployment**: Create a new, small VM or container and place its disk on the new `rbd-proxmox` storage. Verify it boots and operates correctly.
+- [x] **Troubleshoot and Stabilize Network Appliance Services**
+    - [x] **AdGuard Home Investigation**: Diagnosed and fixed multiple crash-loop issues caused by outdated and incorrect YAML configuration.
+    - [x] **Network Connectivity Debugging**: Identified and resolved a missing IPv4 default gateway on the `lxc-network-appliance`, restoring internet connectivity.
+    - [x] **Session Management Issues**: Troubleshot a persistent login loop in the AdGuard Home web interface, leading to the discovery of underlying Docker volume permission problems.
+    - [x] **Migration to Pi-hole**: To resolve persistent stability and configuration issues with AdGuard Home, the decision was made to migrate to Pi-hole.
+- [x] **Implement Pi-hole as DNS/DHCP Server**
+    - [x] **Initial Pi-hole Deployment**: Replaced the AdGuard Home configuration in the `network-appliance` role with a new configuration for Pi-hole.
+    - [x] **DHCP Configuration**: Configured the Pi-hole container to act as the DHCP server for the isolated `net0` virtual network (`10.0.0.0/24`).
+- [x] **Expand Virtual Network Infrastructure**
+    - [x] **Provision Traefik Appliance**: Extended the Terraform configuration to provision a second LXC container (`lxc-traefik-client`) to serve as a dedicated reverse proxy and a test client for the virtual network.
+    - [x] **Ansible Inventory Refactoring**: Restructured the Ansible inventory to support the new two-appliance setup, creating distinct groups for the Pi-hole and Traefik servers.
+- [x] **Implement Dynamic Infrastructure Management**
+    - [x] **Terraform-to-Vault Integration**: Modified the Terraform configuration to securely store the dynamically generated Ansible inventory in HashiCorp Vault instead of a local file.
+    - [x] **Dynamic Inventory Script**: Created a Python script (`dynamic_inventory.py`) to fetch the inventory from Vault, making the Ansible automation aware of the dynamically provisioned infrastructure.
+- [x] **Build Custom CI/CD Execution Environment**
+    - [x] **Dockerfile for Ansible**: Created a custom Dockerfile to build a self-contained Ansible execution environment with all necessary Python dependencies (`hvac`, `pyyaml`) and tools (`yq`).
+    - [x] **CI Workflow for Image Build**: Implemented a GitHub Actions workflow to automatically build and push the custom Ansible image to the GitHub Container Registry (`ghcr.io`).
+- [x] **Fix and Refactor Dynamic Inventory Script**
+    - [x] **Diagnose Inventory Failure**: Investigated why the dynamic inventory script was not providing hosts to Ansible within the CI/CD environment.
+    - [x] **Refactor Inventory Structure**: Updated the Terraform template (`inventory.tftpl`) to generate a flatter, more standard inventory structure, removing complex nesting that was causing parsing issues.
+    - [x] **Rewrite Inventory Script**: Based on official Ansible documentation, completely rewrote the script's output generation (`format_for_ansible` function) to produce a JSON structure that is fully compliant with Ansible's expectations for dynamic inventories.
+    - [x] **Verify All Script Logic**: Corrected both the `--list` and `--host` functions within the script to ensure all modes of operation work with the new, flatter data model.
+- [x] **Integrate Dynamic Inventory into CI/CD Workflow**
+    - [x] **Successful Integration**: With the inventory script and data source corrected, the `test-dynamic-inventory` and `test-network-appliance` workflows now execute successfully, confirming the dynamic inventory is fully integrated.
 
 ## In Progress
+- [ ] **Finalize CI/CD Integration**
+    - [ ] Verify that the `test-network-appliance` workflow runs successfully with the new dynamic inventory setup.
+- [ ] **Implement Virtual Router/Firewall**
+- [ ] **Migrate Existing Services to Virtual Network**
+- [ ] **Migrate Traefik to a dedicated machine.**
 - [ ] **Install Rancher on Talos Cluster**
-    - [ ] **Phase 1: Install Ceph CSI Driver**
-        - [x] Securely store Ceph admin key in Vault.
-        - [x] Install and configure Vault-Kubernetes authentication (`setup-vault-k8s-auth.sh`).
-        - [ ] Add `ceph-csi` Helm repository.
-        - [ ] Create `ceph-csi-rbd` namespace.
-        - [ ] Create `values.yaml` for the `ceph-csi-rbd` chart with Vault integration.
-        - [ ] Install the chart using Helm.
-    - [ ] **Phase 2: Create Default StorageClass**
-        - [ ] Define and apply a `StorageClass` manifest for Ceph RBD.
-        - [ ] Set the new `StorageClass` as the default.
-    - [ ] **Phase 3: Install Rancher**
-        - [ ] Add the Rancher Helm repository.
-        - [ ] Create the `cattle-system` namespace.
-        - [ ] Install Rancher using Helm.
-
-## Pending Tasks
-

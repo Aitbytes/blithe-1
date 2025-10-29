@@ -1,0 +1,35 @@
+name: Test Dynamic Inventory
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'config-ansible/dynamic_inventory.py'
+      - 'docker/Dockerfile'
+      - '.github/workflows/build-ansible-image.yaml'
+      - '.github/workflows/test-dynamic-inventory.yaml'
+  pull_request:
+    paths:
+      - 'config-ansible/dynamic_inventory.py'
+      - 'docker/Dockerfile'
+      - '.github/workflows/build-ansible-image.yaml'
+      - '.github/workflows/test-dynamic-inventory.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-inventory:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/aitbytes/ansible:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test dynamic inventory script
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+        run: |
+          ansible-inventory -i config-ansible/dynamic_inventory.py --graph
