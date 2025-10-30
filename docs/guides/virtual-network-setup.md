@@ -42,7 +42,7 @@ The entire lifecycle of this environment is managed through Infrastructure as Co
 *   **Roles**:
     *   **`router`**: Applied to the Pi-hole appliance. It configures `sysctl` for IP forwarding and manages `iptables` to perform NAT.
     *   **`docker`**: Applied to both appliances to install and configure the Docker runtime.
-    *   **`network-appliance` (Pi-hole)**: Applied to the Pi-hole appliance. It deploys and configures the Pi-hole Docker container using a declarative `pihole.toml` file, which includes the DHCP server configuration.
+    *   **`network-appliance` (Pi-hole)**: Applied to the Pi-hole appliance. It deploys and configures the Pi-hole Docker container. The DHCP server is configured via a `pihole.toml` file, while custom DNS records are managed declaratively via environment variables injected into the Docker Compose file from Ansible variables.
     *   **`traefik-internal`**: Applied to the Traefik appliance. It deploys and configures the Traefik Docker container.
 *   **Execution Order**: The main playbook (`proxmox_vnet.yml`) is structured to enforce a sequential execution order, ensuring the Pi-hole appliance (including the router and DHCP server) is fully configured before any dependent clients like the Traefik appliance are set up.
 

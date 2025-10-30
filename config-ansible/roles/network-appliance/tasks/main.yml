@@ -14,19 +14,11 @@
 - name: Template Pi-hole configuration
   template:
     src: pihole.toml.j2
-    dest: "{{ pihole_data_path }}/pihole.toml"
+    dest: "{{ pihole_data_path }}/pihole/pihole.toml"
     owner: "root"
     group: "root"
     mode: '0644'
   notify: restart pihole
-
-- name: Create custom DNS records
-  template:
-    src: 02-custom.conf.j2
-    dest: "{{ pihole_data_path }}/dnsmasq.d/02-custom.conf"
-    owner: "root"
-    group: "root"
-    mode: '0644'
 
 - name: Template Docker Compose file for Pi-hole
   template:

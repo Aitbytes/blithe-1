@@ -19,6 +19,15 @@ pihole_data_path: "/opt/containers/pihole"
 
 pihole_vault_secret_path: "kv/blithe/network-appliance"
 
+
+tailscale_authkey: "{{ (lookup('url',vault_url + '/v1/kv/data/blithe/config-ansible/roles/traefik/defaults', headers={'X-Vault-Token': vault_token} ) | from_json).data.data.tailscale_authkey }}"
+
+pihole_dns_records:
+  "traefik.local": "10.0.0.2"
+  "proxmox.local": "10.0.0.2"
+  "proxmox.local": "192.168.1.10"
+  "debian003.local": "192.168.1.50"
+
 # DHCP settings for the net0 virtual network
 pihole_dhcp_settings:
   range_start: "10.0.0.100"

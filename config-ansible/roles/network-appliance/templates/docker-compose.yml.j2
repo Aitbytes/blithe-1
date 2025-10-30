@@ -6,9 +6,14 @@ services:
     network_mode: "host"
     environment:
       TZ: "Europe/London"
+      FTLCONF_webserver_api_password: "{{ vault_pihole_password }}"
+      FTLCONF_dns_hosts: >-
+        {% for domain, ip in pihole_dns_records.items() -%}
+        {{ ip }} {{ domain }}{% if not loop.last %};{% endif %}
+        {%- endfor %}
+
     volumes:
       - "{{ pihole_data_path }}/pihole:/etc/pihole"
       - "{{ pihole_data_path }}/dnsmasq.d:/etc/dnsmasq.d"
-      - "{{ pihole_data_path }}/pihole.toml:/etc/pihole/pihole.toml"
     cap_add:
       - NET_ADMIN
