@@ -1,0 +1,9 @@
+---
+# defaults file for step-ca
+
+step_ca_data_path: "/opt/containers/step-ca"
+step_ca_name: "Blithe Internal CA"
+step_ca_dns_names:
+  - "step-ca.{{ hostname }}"
+  - "localhost"
+  - "127.0.0.1"

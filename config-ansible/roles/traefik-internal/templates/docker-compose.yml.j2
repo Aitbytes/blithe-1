@@ -3,6 +3,16 @@ services:
     image: "{{ traefik_image }}"
     container_name: "{{ traefik_container_name }}"
     restart: unless-stopped
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.stepca.acme.caserver=https://step-ca.{{ hostname }}:9000/acme/acme/directory"
+      - "--certificatesresolvers.stepca.acme.storage={{ traefik_acme_path }}/acme.json"
+      - "--certificatesresolvers.stepca.acme.tlschallenge=true"
+
     security_opt:
       - no-new-privileges:true
     networks:
@@ -16,11 +26,16 @@ services:
       - "{{ traefik_data_path }}/dynamic_conf.yml:{{ traefik_config_path }}/dynamic_conf.yml:ro"
       - "{{ traefik_data_path }}/acme.json:{{ traefik_acme_path }}/acme.json"
       - "{{ traefik_data_path }}/logs:{{ traefik_log_path }}"
+      - "{{ step_ca_data_path }}/certs/root_ca.crt:/etc/traefik/root_ca.crt:ro"
+    environment:
+      - "LEGO_CA_CERTIFICATES=/etc/traefik/root_ca.crt"
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.local`)"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=stepca"
 
 networks:
   proxy:

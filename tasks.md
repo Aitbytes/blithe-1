@@ -30,7 +30,29 @@ Document Virtual Network Architecture and Plan Next Steps
 - [x] **Finalize CI/CD Integration**
     - [x] **Sequential Execution**: Refactored the main Ansible playbook to enforce a sequential execution order, ensuring the Pi-hole appliance is fully configured before the dependent Traefik appliance.
     - [x] **End-to-End Verification**: Successfully ran the `test-network-appliance` workflow, confirming that the entire dynamic infrastructure and automation pipeline is working correctly.
+- [x] **Refactor DNS Configuration and Troubleshoot Tailscale**
+    - [x] **Declarative DNS**: Refactored the Pi-hole DNS record management to be fully declarative by passing records to the container via the `FTLCONF_dns_hosts` environment variable.
+    - [x] **Tailscale Integration Attempt**: Integrated Tailscale into the `network-appliance` to provide VPN access, routing the Pi-hole container's traffic through a dedicated Tailscale sidecar.
+    - [x] **LXC `tun` Device Troubleshooting**: Diagnosed and resolved a critical issue where the Tailscale container could not start due to the LXC container lacking permissions to create a `tun` device. This was fixed by configuring the LXC container to run in privileged mode.
+    - [x] **Docker Capability Troubleshooting**: Resolved a subsequent Docker error by removing the unsupported `CAP_SYS_MODULE` from the Tailscale container's capabilities.
+    - [x] **Revert Tailscale Integration**: Based on operational requirements, reverted the Tailscale integration in the `network-appliance` role, returning it to a `host` network configuration.
+    - [x] **Update Host Routes**: Imperatively updated the Tailscale instance on the Proxmox host to advertise the `10.0.0.0/24` virtual subnet, making it accessible across the Tailnet.
+- [x] **Implement Local Certificate Authority**
+    - [x] **Research and Selection**: Researched local CA options and selected Smallstep `step-ca` for its ACME API, which aligns with the project's automation goals.
+    - [x] **Create Ansible Role**: Created a new, dedicated Ansible role (`step-ca`) to manage the deployment and configuration of the `step-ca` service.
+    - [x] **Automate Deployment**: The role automates the creation of required directories, templates the `docker-compose.yml` file, and runs a `docker exec` command to automatically add the ACME provisioner, making the setup fully declarative.
+- [x] **Integrate Traefik with Local CA**
+    - [x] **Configure ACME Resolver**: Updated the `traefik-internal` role to configure Traefik with a new ACME certificate resolver pointing to the internal `step-ca` instance.
+    - [x] **Establish Trust**: Modified the Traefik Docker Compose template to mount the `step-ca` root certificate and set the `LEGO_CA_CERTIFICATES` environment variable, enabling Traefik to trust the local CA.
+    - [x] **Enable TLS**: Updated the Traefik router labels to use the new `stepca` resolver, enabling automatic TLS for internal services.
 
 ## Pending Tasks
+- [ ] **Create CI Workflow for CA and Traefik**: Create a new GitHub Actions workflow to run the `step-ca` and `traefik-internal` roles, ensuring the local CA and reverse proxy configurations are continuously tested.
+- [ ] **Research Improved Pi-hole DNS Management**: Investigate and implement a method to create DNS records in Pi-hole via Ansible without relying on environment variables in the Docker Compose file, aiming for a more direct and robust integration (e.g., using the Pi-hole API or managing `custom.list`).
+- [ ] **Deploy and Test Integrated Service**: Create a new test service that will be:
+    - Deployed via a new Ansible role.
+    - Automatically proxied by Traefik with a TLS certificate from `step-ca`.
+    - Given a DNS record in Pi-hole.
+    - This will serve as an end-to-end test of the entire integrated stack.
 - [ ] **Migrate Traefik to a dedicated machine.**
 - [ ] **Install Rancher on Talos Cluster**

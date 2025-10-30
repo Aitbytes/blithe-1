@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  step-ca:
+    image: smallstep/step-ca:latest
+    container_name: step-ca
+    ports:
+      - "9000:9000"
+    volumes:
+      - "{{ step_ca_data_path }}:/home/step"
+    environment:
+      DOCKER_STEPCA_INIT_NAME: "{{ step_ca_name }}"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "{{ step_ca_dns_names | join(',') }}"
+      DOCKER_STEPCA_INIT_PASSWORD: "{{ vault_step_ca_password }}"
+      DOCKER_STEPCA_INIT_SSH: "false"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
