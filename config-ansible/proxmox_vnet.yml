@@ -9,12 +9,3 @@
       tags: docker
     - role: network-appliance
       tags: network-appliance
-
-- name: Configure Traefik Appliance
-  hosts: traefik_servers
-  become: true
-  roles:
-    - role: docker
-      tags: docker
-    - role: traefik-internal
-      tags: traefik-internal
