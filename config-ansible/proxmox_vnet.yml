@@ -16,8 +16,5 @@
   roles:
     - role: docker
       tags: docker
-    - role: step-ca
-      tags: step-ca
     - role: traefik-internal
       tags: traefik-internal
-

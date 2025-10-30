@@ -7,7 +7,7 @@ resource "proxmox_virtual_environment_container" "pihole_appliance" {
   node_name    = "zsus-pve"
   vm_id        = 200
   description  = "Pi-hole DNS and DHCP Server"
-  unprivileged = false
+  unprivileged = true
   start_on_boot  = true
 
   depends_on = [
